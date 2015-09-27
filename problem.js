@@ -500,8 +500,8 @@ function toTeX(string) {
                 }
                 // test for fractions
                 else if (/\//.test(middle)) {
-                    start = "\\frac";
-                    end = "";
+                    start = "{\\frac";
+                    end = "}";
                     middle = "";
                     string = string.substr(0, firstBegin) + start + string.substr(firstBegin, firstEnd-firstBegin+1) + middle +  string.substr(secondBegin, secondEnd-secondBegin+1) + end + string.substr(secondEnd+1);
                     changesMade = true;
