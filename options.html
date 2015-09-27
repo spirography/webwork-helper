@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>WeBWorK Helper Options</title>
+        <style>
+            body: {
+                padding: 10px;
+            }
+            .hr {
+                position: absolute;
+                width: 100%;
+                border-top: 1px solid #D3D3D3;
+            }
+            .delete-course {
+                width: 100px;
+                padding: 5px;
+                margin-left: 20px;
+                background: white;
+                font-weight: bold;
+                border-left: 2px solid transparent;
+                cursor: pointer;
+            }
+            .delete-course:after {
+                float: right;
+                width: 10px;
+                font-size: 14px;
+                line-height: 16px;
+                content: "\2715";
+                color: #aaa;
+            }
+            .delete-course:hover:after {
+                color: #003388;
+            }
+            .delete-course:hover {
+                border-color: #003388;
+                background: #e6e6e6;
+            }
+
+            #save, #status {
+                display: inline-block;
+            }
+            #status {
+                margin-left: 20px;
+            }
+
+        </style>
+        <link rel="stylesheet" href="form.css" type="text/css">
+    </head>
+    
+    <body>
+        <label style="display: none;">
+            <input type="checkbox" id="inputs">Expand input boxe size if the answer doesn't fit inside
+        </label>
+
+
+        <label>
+            <input type="checkbox" id="mathjax">Show answer previews
+        </label>
+        <br>
+        <br>
+        <label><input id="highlighting0" type="radio" name="highlighting">No highlighting</label>
+        <br>
+        <label><input id="highlighting1" type="radio" name="highlighting">Highlight current set of parentheses in blue</label>
+        <br>
+        <label><input id="highlighting2" type="radio" name="highlighting">Highlight current set of parentheses in color</label>
+        <br>
+        <label><input id="highlighting3" type="radio" name="highlighting">Highlight everything</label>
+        <br>
+        <br>
+        <div id="courses"><span style="margin-bottom: 7px; display: inline-block;">Your WeBWorK Courses: (click to delete their data)</span></div>
+
+        <label style="display: none;">
+            <input type="checkbox" id="coloring">Display reminders
+        </label>
+
+
+        <br>
+        <div class="button" id="save">Save Options</div><div id="status">&nbsp;</div>
+        <br>
+        <br>
+        <div class="hr">&#x00A0;</div>
+        <br>
+        <div id="footer">Created by Jeremy Spiro. If you find any bugs, <a target="_blank" href="https://chrome.google.com/webstore/detail/webwork-helper/cpopnpmengdaogmfllafolpghameihnp/support">please let me know</a>.</div>
+        <script src="options.js"></script>
+    </body>
+
+</html>

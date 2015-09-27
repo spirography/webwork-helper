@@ -1,0 +1,317 @@
+.WWnormal {
+	color: #003388;
+}
+.WWsuccess, .WWsuccess a {
+	color: #3c763d;
+}
+.WWwarning, .WWwarning a {
+	color: #f0ad4e;    /*#E3B900*/
+}
+.WWdanger {
+	color: #a94442;
+}
+/* flashing warning text */
+.WWflashing, .WWflashing a {
+	animation: danger 1s infinite;
+}
+@keyframes danger {
+	0% {color:#DC0709;text-shadow:0 0 5px #fca2a3}
+	50% {color:#FF6D33;text-shadow:0 0 5px #fde0b0}
+	100% {color:#DC0709;text-shadow:0 0 5px #fca2a3}
+}
+.WWdisabled {
+	color: #999;
+}
+
+
+/* the hidden timers on the class home page */
+.timer-hidden {
+	position: relative; /* position: absolute; */
+	float: right;       /* right: 0; */
+	display: inline-block;
+	width: 100px;
+	opacity: 1;
+	font-weight: bold;
+	transition: opacity 0.1s;
+	
+}
+tr:hover .timer-hidden {
+	opacity: 1;
+}
+
+/* the completion percentage of each assignment on the class home page */
+.completionPercentage {
+	position: relative;
+	left: 20px;
+	font-weight: bold;
+}
+.completionPercentage:after {
+	content: "% complete";
+}
+
+
+
+
+
+/* the image popup */
+.image-popup {
+	position: absolute;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+}
+
+
+
+
+
+
+/* the popup thingy to the side */
+/* arrow points UP */
+.MJpopup-bottom {
+	z-index: 999;
+	display: inline-block;
+	position: absolute;
+	top: 40px;
+	transform: translateX(0%);
+	background: #c3c3c3;
+	border: 1px solid #888;
+	border-radius: 5px;
+	padding: 0 5px;
+	opacity: 0; /* this is what hides the element when the corresponding input isn't focused */
+	min-width: 30px;
+}
+
+/* the :before and :after are layered on top of each other to make the arrow */
+.MJpopup-bottom:after, .MJpopup:before {
+	bottom: 100%;
+	left: 20px;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+.MJpopup-bottom:after {
+	border-color: transparent;
+	border-bottom-color: #c3c3c3;
+	border-width: 12px;
+	margin-left: -12px;
+}
+.MJpopup-bottom:before {
+	border-color: transparent;
+	border-bottom-color: #888;
+	border-width: 13px;
+	margin-left: -13px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* the popup thingy to the side */
+/* arrow points RIGHT */
+.MJpopup {
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	left: -23px;
+	transform: translateX(-100%) translateY(-50%);
+	background: #c3c3c3; /*#f5f5f5;*/
+	border: 1px solid #888; /*#e3e3e3;*/
+	border-radius: 5px;
+	padding: 0 5px;
+	opacity: 0; /* this is what hides the element when the corresponding input isn't focused */
+}
+
+/* the :before and :after are layered on top of each other to make the arrow */
+.MJpopup:after, .MJpopup:before {
+	left: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+.MJpopup:after {
+	border-color: transparent;
+	border-left-color: #c3c3c3; /*#f5f5f5;*/
+	border-width: 12px;
+	margin-top: -12px;
+}
+.MJpopup:before {
+	border-color: transparent;
+	border-left-color: #888; /*#e3e3e3;*/
+	border-width: 13px;
+	margin-top: -13px;
+}
+
+/* a <span> that keeps the popup aligned properly */
+.MJpopup-container {
+	display: inline-block;
+	position: relative;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* the popup thingy to the side */
+.topPopup {
+	display: none; /* otherwise it is still clickable and blocks other elements (such as inputs) on the page */
+	position: absolute;
+	top: -50px;
+	transform: translateX(-50%) translateY(-100%);
+	background: #c3c3c3;
+	border: 1px solid #888;
+	border-radius: 5px;
+	padding: 5px 5px;
+	opacity: 0; /* this is what hides the element when the corresponding input isn't focused */
+	z-index: 3; /* because otherwise highlight and error shading in the input.codeshard elements would show on top */
+}
+
+
+
+
+
+
+/* the :before and :after are layered on top of each other to make the arrow */
+/* arrow points DOWN */
+.topPopup:after, .topPopup:before {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+.topPopup:after {
+	border-color: transparent;
+	border-top-color: #c3c3c3;
+	border-width: 12px;
+	margin-left: -12px;
+}
+.topPopup:before {
+	border-color: transparent;
+	border-top-color: #888;
+	border-width: 13px;
+	margin-left: -13px;
+}
+
+/* a <span> that keeps the popup aligned properly */
+.topPopup-container {
+	position: relative;
+}
+
+
+/* disable MathJax error boxes, and use own error message */
+.noError {
+	width: 64px !important;
+	color: transparent !important;
+	border: none !important;
+}
+.noError:before {
+	color: black !important;
+	content: "syntax error";
+}
+
+
+
+/*
+ * Style information for the synta
+ * highlighting overlays on inputs
+ */
+
+.highlight, .errors, .codeshard, .codeshard-hidden {
+	font-family: Courier;
+	font-size: 18px !important;
+	padding: 4px 2px !important;
+	margin: 0 3.518px;
+	text-align: left;
+}
+
+input.codeshard {
+	z-index: 2 !important;
+	background: transparent !important;
+	position: relative;
+}
+
+
+.highlight, .errors {
+	position: absolute;
+	border: 1px solid transparent;
+	/*top: -19px;*/
+	top: 0;
+	pointer-events: none;
+}
+.highlight {
+	z-index: 1;
+	height: 1em;
+	color: transparent;
+	background: white;	/* input background is disabled, so recreate it here */
+}
+.errors {
+	z-index: 3;
+	color: transparent;
+	background: transparent;
+}
+
+.highlight span {
+	background: #B1D7FF
+}
+
+.highlight span.translucent {
+	background: rgba(255, 255, 255, 0.5) !important; /* important can be taken away if the above, default styling is removed */
+}
+
+.highlight span[value="0"] {
+	background: #FFA672;
+}
+.highlight span[value="1"] {
+	background: #EDDF65;
+}
+.highlight span[value="2"] {
+	background: #8CFF97;
+}
+.highlight span[value="3"] {
+	background: #93A3FF;
+}
+.highlight span[value="4"] {
+	background: #E298DB;
+}
+
+.highlight .syntaxError {
+	background: red !important;
+}
+.errors .syntaxError {
+	background: none;
+	color: white !important;
+}

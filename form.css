@@ -1,0 +1,75 @@
+a {
+    outline: 0;
+    text-decoration: none;
+}
+a:visited {
+    color: rgb(17, 85, 204);
+}
+
+
+label {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Checkbox and Radio Button */
+input[type=radio], input[type=checkbox] {
+    width: 16px;
+    height: 16px;
+    margin: 4px;
+    border: 1px solid black !important;
+    background: white !important;
+    box-shadow: none !important;
+    outline: none;
+    vertical-align: middle;
+}
+input[type=radio]:hover, input[type=checkbox]:hover {
+    background: #ddd !important;
+}
+input[type=radio]:active, input[type=checkbox]:active {
+    background: #aaa !important;
+}
+input[type=radio]:checked, input[type=radio]:checked:hover, input[type=checkbox]:checked, input[type=checkbox]:checked:hover {
+    background: #003388 !important;
+    border-color: #003388 !important;
+    color: white !important;
+}
+input[type=radio]:checked:before {
+    position: relative;
+    top: 4px;
+    left: 4px;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+}
+input[type=checkbox]:checked:before {
+    color: white;
+    background: none;
+    content:"\2713";
+    text-align: center;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+/* Submit Button */
+a {
+    outline: 0;
+    text-decoration: none;
+}
+.button {
+    width: 150px;
+    margin: 0 4px;
+    padding: 5px;
+    background: #bbb;
+    font-weight: bold;
+    cursor: pointer;
+    background: #e6e6e6;
+    border: 1px solid #e6e6e6;
+    color: #003388;
+    text-align: center;
+}
+.button:hover {
+    background: #003388;
+    color: white;
+}

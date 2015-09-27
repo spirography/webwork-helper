@@ -1,0 +1,51 @@
+{
+  "manifest_version": 2,
+
+  "name": "WeBWorK Helper",
+  "description": "Makes WeBWorK a little easier to use",
+  "version": "1.4.1",
+
+  "description": "Adds several features to WeBWorK",
+  "icons": {
+    "128": "icon-128.png",
+    "64": "icon-64.png",
+    "32": "icon-32.png",
+    "16": "icon-16.png"
+  },
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.webwork.rochester.edu/*"],
+      "js": ["inject.js"],
+      "css" : ["styles.css"]
+    }
+  ],
+
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+
+  "browser_action": {
+    "default_title": "WeBWorK",
+    "default_popup": "popup.html"
+  },
+
+  "permissions": [
+    "storage"
+  ],
+
+  "web_accessible_resources": [
+    "options.js",
+    "popup.js",
+    "class.js",
+    "assignment.js",
+    "problem.js",
+    "form.css"
+  ]
+}
