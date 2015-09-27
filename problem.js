@@ -120,13 +120,12 @@ $(document).ready(function() {
 
         } else if (preferences.mathjax) {   // only execute if mathjax is enabled in the options menu
 
-
             // convert the input into TeX notation
             value = toTeX(value);
 
             // if the preview div was EMPTY BEFORE NOW, then reveal it (also, don't show them when the event is initially triggered when the page first loads)
             if (previewDiv.text().length == 0 && e.originalEvent !== undefined) {
-                previewDiv.animate({opacity: 1}, 200);
+                previewDiv.show().animate({opacity: 1}, 200);
             }
 
             // add on the slashes and brackets to the sides and append to the DOM if it is long enough
@@ -333,8 +332,6 @@ $(document).ready(function() {
 
         $("#"+id+"highlight").html(string);
         $("#"+id+"errors").html(string);
-
-        //console.log(string);
 
         }, 10);
     }   // highlight brackets end
