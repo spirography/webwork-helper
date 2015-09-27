@@ -528,9 +528,6 @@ function toTeX(string) {
     // replace "©"" with "^"
     string = string.replace(/\u00A9/g, '\u005E');
 
-    // replace "ƒ" with "\\frac"
-    string = string.replace(/\u0192/g, "\\frac");
-
     // remove ALL spaces
     string = string.replace(/ +/g, "");
 
