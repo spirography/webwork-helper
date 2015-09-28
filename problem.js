@@ -424,100 +424,100 @@ function toTeX(string) {
     // get rid of all spaces (which should be between brackets
     string = string.replace(/ /g, "");
 
-    // TODO: functions (cos, sin, abs, etc)
-    //string = string.replace(/([A-Za-z]+{)/g, "\\$1");
-
     // "}{" means multiplication
     string = string.replace(/}{/g, "}*{");
 
     var brackets = [];
 
 
-    
-
+    /*
+     * T0D0: rewrite this code
+     * it really, REALLY needs optimization
+     * maybe use code from highlighting?
+     */
     for (var n = 0; n < 50; n++) {
 
-    // check if any changes were made on a given iteration
-    var changesMade = false;
+        // check if any changes were made on a given iteration
+        var changesMade = false;
 
-    // how many layers of brackets deep the loop is
-    var depth = 0;
-    // find brackets
-    for (var i = 0; i < string.length; i++) {   // look for opening brackets
-        if (string.charAt(i) === "{") {
-            if (brackets[depth] === undefined) {
-                brackets[depth] = [];
-            }
-            // push the parenthese location on
-            brackets[depth].push(i);
-            // dive in deeper
-            depth++;
+        // how many layers of brackets deep the loop is
+        var depth = 0;
+        // find brackets
+        for (var i = 0; i < string.length; i++) {   // look for opening brackets
+            if (string.charAt(i) === "{") {
+                if (brackets[depth] === undefined) {
+                    brackets[depth] = [];
+                }
+                // push the parenthese location on
+                brackets[depth].push(i);
+                // dive in deeper
+                depth++;
             
-        } else if (string.charAt(i) === "}") {  // look for closing brackets
-            // dive outward
-            depth--;
-            // check for errors
-            if (depth < 0)
-                break;
-            // add the bracket on
-            brackets[depth].push(i);
+            } else if (string.charAt(i) === "}") {  // look for closing brackets
+                // dive outward
+                depth--;
+                // check for errors
+                if (depth < 0)
+                    break;
+                // add the bracket on
+                brackets[depth].push(i);
             
-            // if there are two or more sets at the layer, look for some certain functions
-            var length = brackets[depth].length;
-            if (brackets[depth].length >= 4) {
+                // if there are two or more sets at the layer, look for some certain functions
+                var length = brackets[depth].length;
+                if (length >= 4) {
 
-                var firstBegin = brackets[depth][length-4];
-                var firstEnd = brackets[depth][length-3];
-                var secondBegin = brackets[depth][length-2];
-                var secondEnd = brackets[depth][length-1];
+                    var firstBegin = brackets[depth][length-4];
+                    var firstEnd = brackets[depth][length-3];
+                    var secondBegin = brackets[depth][length-2];
+                    var secondEnd = brackets[depth][length-1];
 
-                var first = string.substr(firstBegin, firstEnd-firstBegin+1);
-                var second = string.substr(secondBegin, secondEnd-secondBegin+1);
-                // look at what is in between the two bracket groups
-                var middle = string.substr(firstEnd+1, secondBegin-firstEnd-1);
+                    var first = string.substr(firstBegin, firstEnd-firstBegin+1);
+                    var second = string.substr(secondBegin, secondEnd-secondBegin+1);
+                    // look at what is in between the two bracket groups
+                    var middle = string.substr(firstEnd+1, secondBegin-firstEnd-1);
 
-                /*
-                 * Where the real magic happens
-                 */
+                    /*
+                     * Where the real magic happens
+                    */
 
-                // check the middle for any...brackets (if there are, the capture group isn't valid, so skip to next one)
-                if (/{|}/.test(middle)) {
-                    continue;
-                }
+                    // check the middle for any...brackets (if there are, the capture group isn't valid, so skip to next one)
+                    if (/{|}/.test(middle)) {
+                        continue;
+                    }
 
-                var start = "", end = "";
+                    var start = "", end = "";
 
 
-                // test for exponents
-                if (/\^/.test(middle)) {
-                    start = "{";
-                    end = "}";
-                    middle = "©";   // substitute character for "^", is converted back later
+                    // test for exponents
+                    if (/\^/.test(middle)) {
+                        start = "{";
+                        end = "}";
+                        middle = "©";   // substitute character for "^", is converted back later
 
-                    string = string.substr(0, firstBegin) + start + string.substr(firstBegin, firstEnd-firstBegin+1) + middle +  string.substr(secondBegin, secondEnd-secondBegin+1) + end + string.substr(secondEnd+1);
-                    changesMade = true;
-                    break;
-                }
-                // test for fractions
-                else if (/\//.test(middle)) {
-                    start = "{\\frac";
-                    end = "}";
-                    middle = "";
-                    string = string.substr(0, firstBegin) + start + string.substr(firstBegin, firstEnd-firstBegin+1) + middle +  string.substr(secondBegin, secondEnd-secondBegin+1) + end + string.substr(secondEnd+1);
-                    changesMade = true;
-                    break;
-                }
+                        string = string.substr(0, firstBegin) + start + string.substr(firstBegin, firstEnd-firstBegin+1) + middle +  string.substr(secondBegin, secondEnd-secondBegin+1) + end + string.substr(secondEnd+1);
+                        changesMade = true;
+                        break;
+                    }
+                    // test for fractions
+                    else if (/\//.test(middle)) {
+                        start = "\\frac";
+                        end = "";
+                        middle = "";
+                        string = string.substr(0, firstBegin) + start + string.substr(firstBegin, firstEnd-firstBegin+1) + middle +  string.substr(secondBegin, secondEnd-secondBegin+1) + end + string.substr(secondEnd+1);
+                        changesMade = true;
+                        break;
+                    }
 
                 
-            } // end of looking at a bracket pair
-            
+                } // end of looking at a bracket pair
+                
+            }
         }
-    }
-    // if no changes were made, exit
-    if (!changesMade)
-        break;
+        // if no changes were made, exit
+        if (!changesMade)
+            break;
 
-    brackets = [];
+        brackets = [];
     }
 
     // now apply some last minute formatting

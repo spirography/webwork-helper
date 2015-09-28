@@ -80,7 +80,7 @@ function restore_options() {
                 // get name info with regexp (same code as in popup.js)
                 var match = /((?:fall)|(?:spring)|(?:summer))(\d+)(mth)(\d+)/.exec(key);
                 var formattedname = match[1].substr(0, 1).toUpperCase() + match[1].substr(1) + " Math " + match[4];
-                courseInfo.innerHTML += '<div class="delete-course" value="'+key+'">' + formattedname +  '</div>';
+                courseInfo.innerHTML += '<div class="delete-course" value="'+key+'">' + formattedname + '<span class="object-size">'+JSON.stringify(courses[key]).length*2+' bytes</span>' + '</div>';
             }
         }
         courseInfo = document.getElementsByClassName("delete-course");
@@ -94,4 +94,3 @@ function restore_options() {
 document.addEventListener("DOMContentLoaded", restore_options);
 // when clicked, saves the user's preferences
 document.getElementById("save").addEventListener("click", save_options);
-
