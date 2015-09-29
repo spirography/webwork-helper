@@ -2,6 +2,11 @@
  * When on the webworks site, tries to figure out
  * what page it is on in order to decide which script
  * to inject
+ *
+ *
+ * note: "p" in the courses object is short for "problems", and
+ * "a" is short for "average" - single letters are used to reduce
+ * space in storage.sync (courses object has a size cap of 8kb)
  */
 
 
