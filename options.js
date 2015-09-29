@@ -46,13 +46,11 @@ function delete_course(element) {
 
     // save courses and update background.js
     chrome.runtime.sendMessage({greeting: "updateCourses", information: courses});
+
+    // update memory usage in the options menu
+    document.getElementById("total-memory-used").innerText = "Total memory used: " + memory_used() + " bytes";
+
 }
-
-
-
-
-
-
 
 
 
@@ -80,14 +78,23 @@ function restore_options() {
                 // get name info with regexp (same code as in popup.js)
                 var match = /((?:fall)|(?:spring)|(?:summer))(\d+)(mth)(\d+)/.exec(key);
                 var formattedname = match[1].substr(0, 1).toUpperCase() + match[1].substr(1) + " Math " + match[4];
-                courseInfo.innerHTML += '<div class="delete-course" value="'+key+'">' + formattedname + '<span class="object-size">'+JSON.stringify(courses[key]).length*2+' bytes</span>' + '</div>';
+                courseInfo.innerHTML += '<div class="delete-course" value="'+key+'">' + formattedname + '<span class="object-size">'+JSON.stringify(courses[key]).length+' bytes</span>' + '</div>';
             }
         }
         courseInfo = document.getElementsByClassName("delete-course");
         for (var i = 0; i < courseInfo.length; i++) {
             courseInfo[i].addEventListener("click", function() {delete_course(this);});
         }
+        document.getElementById("total-memory-used").innerText = "Total memory used: " + memory_used() + " bytes";
     });
+}
+
+/*
+ * Returns the total memory used
+ * by the extension, in bytes
+ */
+function memory_used() {
+    return JSON.stringify(courses).length+7 + JSON.stringify(preferences).length+11;
 }
 
 
