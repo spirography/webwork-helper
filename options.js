@@ -53,8 +53,6 @@ function delete_course(element) {
 }
 
 
-
-
 /*
  * Restores select box and checkbox state using the preferences
  * stored in chrome.storage.
@@ -88,6 +86,7 @@ function restore_options() {
         document.getElementById("total-memory-used").innerText = "Total memory used: " + memory_used() + " bytes";
     });
 }
+
 
 /*
  * Returns the total memory used
