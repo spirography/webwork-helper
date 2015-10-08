@@ -10,9 +10,9 @@ $(document).ready(function() {
     // add a hidden <span> element to every <input> tag so that
     // by using this element, the width of the input's content
     // can be calculated (and the input's size can be changed)
-    $.map($('input.codeshard'), function(n) {
+    $.map($("input.codeshard"), function(n) {
         // cache the id
-        var id = $(n).attr('id');
+        var id = $(n).attr("id");
 
         // add the corresponding MathJax div popup (and assorted elements)
         $(n).before('<span class="MJpopup-container"><div id="' + id + 'preview" class="MJpopup"><span class="MJarrow"></span></div></span>');
@@ -32,12 +32,8 @@ $(document).ready(function() {
     });
 
 
-
-
-
-
     // initialize preview images
-    $.map($('img'), function(n) {
+    $.map($("img"), function(n) {
         // create offscreen to determine width and height
         var testImage = new Image();
         testImage.src = $(n).attr("src");
@@ -48,10 +44,6 @@ $(document).ready(function() {
         // append to DOM, shift to the right and upwards a little
         $(n).before('<span class="topPopup-container"><div class="topPopup" style="width:'+imageWidth+'px; height:'+imageHeight+'px;left:'+$(n).width()/2+'px;"><img src="'+$(n).attr('src')+'"></div></span>');
     });
-
-
-
-
 
 
     // guesstimate how many questions the user got wrong
@@ -70,10 +62,6 @@ $(document).ready(function() {
     
         $(summary).children().html("I estimate that you answered <b>" + (problemsWrong == 0 ? "zero" : problemsWrong) + "</b> question" + (problemsWrong == 1 ? "" : "s") + " incorrectly.<br>" + $(summary).children().html());
     }
-
-
-
-
 
 
     /*
@@ -376,7 +364,7 @@ function toTeX(string) {
     // replace curly brackets "{}" with regular brackets "()" because it interferes with TeX notation
     string = string.replace(/\{/g, "(").replace(/\}/g, ")");
 
-    string = string.replace(/((([^\d\)\]])(-))?(\d+(\.\d+)?))/g, "$3{$4$5}");   // numbers (includes support for negative numbers)
+    string = string.replace(/((([^\d^\w\)\]])(-))?(\d+(\.\d+)?))/g, "$3{$4$5}");   // numbers (includes support for negative numbers)
     
     // variables (todo: optimize)
     for (var i = 0; i < string.length; i++) {
@@ -529,8 +517,7 @@ function toTeX(string) {
     string = string.replace(/ +/g, "");
 
     // format parentheses so that they are sized properly (unfortunately have to do this at the end instead of earlier when targeting brackets)
-    string = string.replace(/(\(|\[)/g, "\\left$1");
-    string = string.replace(/(\)|\])/g, "\\right$1");
+    string = string.replace(/(\(|\[)/g, "\\left$1").replace(/(\)|\])/g, "\\right$1");
     
     return string;
 }
@@ -540,9 +527,7 @@ function toTeX(string) {
 
 // convert functions to TeX notation
 function escapeOperation(name, string) {
-    var regex = new RegExp("("+name+"){", "g");
 
-    //string = string.replace(regex, "\\$1{");
     var nextMatch = string.indexOf(name, 0);
 
     // replace all instances
@@ -640,5 +625,4 @@ function escapeABS(string) {
 
     // find occurences of the string
     return string;
-
 }
