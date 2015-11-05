@@ -14,8 +14,6 @@ $(document).ready(function() {
         // cache the id
         var id = $(n).attr("id");
 
-        // add the corresponding MathJax div popup (and assorted elements)
-        $(n).before('<span class="MJpopup-container"><div id="' + id + 'preview" class="MJpopup"><span class="MJarrow"></span></div></span>');
         // add the corresponding hidden span
         $(n).after('<span id="' + id + 'hidden" class="codeshard-hidden" style="display: none;"></span>');
 
@@ -24,6 +22,10 @@ $(document).ready(function() {
             ).after('<div id="' + id + 'highlight" class="highlight"></div>\
             <div id="' + id + 'errors" class="errors"></div>\
             ');
+
+        // add the corresponding MathJax div popup (and assorted elements)
+        $(n).before('<span class="MJpopup-container"><div id="' + id + 'preview" class="MJpopup"><span class="MJarrow"></span></div></span>');
+
 
         // set minimum width to equal initial width
         $(n).css("min-width", $(n).width());
