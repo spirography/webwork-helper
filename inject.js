@@ -88,10 +88,6 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
      */
     if (PROBLEM) {
 
-        chrome.storage.sync.get(function(items) {
-            console.log(items);
-        });
-
             // get all input boxes
             var inputs = document.querySelectorAll("input.codeshard");
 
@@ -125,8 +121,10 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
                 // append error div to container
                 container.appendChild(errors);
 
-                // add note container div information
-                container.innerHTML += '<span class="note-container"><span class="note-adder"></span><div class="note" style="display: none"><span class="note-xmark" id="' + parseInt(id.replace(/\D/g, ''), 10) + 'hidenote' + '"></span><div class="body" placeholder="Type notes about a problem here" contenteditable="true"></div></div></span>';
+                // add note container div information (ONLY IF NOTES ARE ENABLED)
+                if (preferences.notes) {
+                    container.innerHTML += '<span class="note-container"><span class="note-adder"></span><div class="note" style="display: none"><span class="note-xmark" id="' + parseInt(id.replace(/\D/g, ''), 10) + 'hidenote' + '"></span><div class="body" placeholder="Type notes about a problem here" contenteditable="true"></div></div></span>';
+                }
 
                 // add container to page
                 inputs[i].parentNode.replaceChild(container, inputs[i]);
@@ -150,6 +148,7 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
              * }
              *
              */
+        if (preferences.notes) {
             var noteName = CLASS+"_"+ASSIGNMENT+"_"+PROBLEM+"_notes";
             var notes;
             chrome.storage.sync.get(noteName, function(items) {
@@ -235,13 +234,15 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
 
         }); // notes get
 
+    } // preferences.notes end
+
 
     }
 
 
 
 
-    if (PROBLEM && courses[CLASS][ASSIGNMENT]["a"] < 100) {
+    if (PROBLEM) {
 
     	// check the "you got x% right" at the bottom, update the corresponding problems array index if different
     	var percentage = /is \d+%/.exec(document.getElementsByClassName("scoreSummary")[0].children[0].innerText)

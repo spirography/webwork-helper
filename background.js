@@ -1,6 +1,7 @@
 // Check whether new version is installed
 
 var courses, preferences;
+
 chrome.runtime.onInstalled.addListener(function(details){
 
     if(details.reason == "install"){
@@ -12,7 +13,8 @@ chrome.runtime.onInstalled.addListener(function(details){
         	mathjax: true, // for mathjax previews
         	coloring: true, // for color stuff on class and assignment pages (not used)
             //autocompleteBrackets: true, // for autocompleting brackets on problems (not used)
-            highlighting: 2 // for highlighting brackets and parentheses
+            highlighting: 2, // for highlighting brackets and parentheses
+            notes: false
         };
         console.log(preferences);
         chrome.storage.sync.set({preferences}, function() {
@@ -44,6 +46,7 @@ chrome.runtime.onInstalled.addListener(function(details){
                     return;
                 }
                 console.log("WeBWorK course information converted to 1.5+ notation");
+
             });
         });
 

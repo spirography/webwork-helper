@@ -18,6 +18,7 @@ function save_options() {
     preferences.mathjax = document.getElementById("mathjax").checked;
     preferences.highlighting = highlight_value;
     preferences.coloring = document.getElementById("coloring").checked;
+    preferences.notes = document.getElementById("notes").checked;
 
 
     // display "Options saved" message (can't go into the sendMessage block for some reason, probably because background.js doesn't send a response)
@@ -47,6 +48,8 @@ function delete_course(element) {
     // save courses and update background.js
     chrome.runtime.sendMessage({greeting: "updateCourses", information: courses});
 
+    // TODO: delete all notes associated with that course
+
     // update memory usage in the options menu
     document.getElementById("total-memory-used").innerText = "Total memory used: " + memory_used() + " bytes";
 
@@ -68,6 +71,7 @@ function restore_options() {
         document.getElementById("mathjax").checked = preferences.mathjax;
         document.getElementById("highlighting" + preferences.highlighting).checked = true; // highlight specific radio button
         document.getElementById("coloring").checked = preferences.coloring;
+        document.getElementById("notes").checked = preferences.notes;
 
         // course list
         var courseInfo = document.getElementById("courses");
