@@ -174,7 +174,7 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
                 if (notes !== undefined) {
                     if  (notes[i+1] !== undefined) { // add note content to the corresponding div
                         adders[i].nextSibling.getElementsByClassName("body")[0].innerText = notes[i+1];
-                        adders[i].className += " has-note"; // color yellow for existing notes
+                        adders[i].parentNode.parentNode.className += " has-note"; // input and adder button yellow if it already has a note
                         console.log("derp");
                     }
                 }
@@ -192,8 +192,9 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
             function hideNote() {
                 this.parentNode.style.display = "none"; // hide "note"
 
+                var thisContainer = this.parentNode.parentNode.parentNode;
                 var thisAdder = this.parentNode.previousSibling;
-                thisAdder.style.display = "inline-block"; // show "note-adder"
+                thisAdder.style.display = "none"; // show "note-adder"
 
                 // problem# + "hidenote"
                 var problemNumber = this.id.substr(0, this.id.length-8);
@@ -207,11 +208,11 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
                     // if note is empty, reset to undefined
                     if (noteText === "") {
                         delete notes[problemNumber];
-                        // remove coloring from corresponding adder span
-                        thisAdder.className = thisAdder.className.replace(/(?:^|\s)has-note(?!\S)/g , '')
+                        // remove coloring from corresponding container div
+                        thisContainer.className = thisContainer.className.replace(/(?:^|\s)has-note(?!\S)/g , '')
                     } else {
                         // color in
-                        thisAdder.className += " has-note"; // color yellow for existing notes
+                        thisContainer.className += " has-note"; // color yellow for existing notes
                         // save note
                         notes[problemNumber] = noteText;
                     }

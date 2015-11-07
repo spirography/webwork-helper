@@ -328,17 +328,32 @@ input.codeshard {
 	display: inline-block;
 	margin-top: 5px;
 }
-.note-adder:before {
-	display: inline-block;
+.note-adder {
+	display: none;
+	width: 20px;
+	height: 20px;
+	background: black;
+	color: white;
 	text-align: center;
+}
+.note-adder:before {
 	font-weight: bold;
 	font-size: 20px;
+	line-height: 3px;
 	content: "+";
 }
-.has-note:before {
-	width: 20px;
-	background: #FFFFA5;
+.input-container:hover .note-adder {
+	display: inline-block !important;
 }
+.has-note .note-adder {
+	color: #5A5A00;
+	background: #FFFFA5;
+	border: 1px solid #D2D278;
+}
+.has-note .codeshard {
+	outline: 1px solid yellow;
+}
+
 .note {
 	position: absolute;
 	display: inline-block;
