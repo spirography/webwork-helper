@@ -126,7 +126,7 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
                 container.appendChild(errors);
 
                 // add note container div information
-                container.innerHTML += '<span class="note-container"><span class="note-adder"></span><div class="note" style="display: none"><span class="note-xmark" id="' + parseInt(id.replace(/\D/g, ''), 10) + 'hidenote' + '"></span><div class="body" contenteditable="true"></div></div></span>';
+                container.innerHTML += '<span class="note-container"><span class="note-adder"></span><div class="note" style="display: none"><span class="note-xmark" id="' + parseInt(id.replace(/\D/g, ''), 10) + 'hidenote' + '"></span><div class="body" placeholder="Type notes about a problem here" contenteditable="true"></div></div></span>';
 
                 // add container to page
                 inputs[i].parentNode.replaceChild(container, inputs[i]);
@@ -237,13 +237,6 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
 
 
     }
-
-
-
-
-
-
-
 
 
 

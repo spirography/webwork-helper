@@ -388,6 +388,10 @@ input.codeshard {
 	max-height: 200px;
 	overflow-y: scroll;
 }
+.note .body[contentEditable=true]:empty:not(:focus):before{ /* the placeholder text when .body is empty */
+  content: attr(placeholder);
+  color: #777;
+}
 .note .body:focus {
 	outline: none; /* remove blue glow around focused elements */
 }
