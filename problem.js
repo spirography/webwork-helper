@@ -7,31 +7,9 @@ var preferences;
 
 $(document).ready(function() {
 
-    // add a hidden <span> element to every <input> tag so that
-    // by using this element, the width of the input's content
-    // can be calculated (and the input's size can be changed)
-    $.map($("input.codeshard"), function(n) {
-        // cache the id
-        var id = $(n).attr("id");
-
-        // add the corresponding hidden span
-        $(n).after('<span id="' + id + 'hidden" class="codeshard-hidden" style="display: none;"></span>');
-
-        // wrap for bracket syntax highlighting
-        $(n).wrap('<div style="position: relative; display: inline-block;"></div>'
-            ).after('<div id="' + id + 'highlight" class="highlight"></div>\
-            <div id="' + id + 'errors" class="errors"></div>\
-            ');
-
-        // add the corresponding MathJax div popup (and assorted elements)
-        $(n).before('<span class="MJpopup-container"><div id="' + id + 'preview" class="MJpopup"><span class="MJarrow"></span></div></span>');
-
-
-        // set minimum width to equal initial width
-        $(n).css("min-width", $(n).width());
-        $("#"+id+"highlight").css("min-width", $(n).width());   // the corresponding .highlight <div> for the white background (for some reason, only works if done separately)
-
-    });
+    /*
+     * input.codeshard helper elements are generated in inject.js
+     */
 
 
     // initialize preview images
@@ -199,7 +177,6 @@ $(document).ready(function() {
             $(this).hide();
         });
     });
-
 
 
     /*

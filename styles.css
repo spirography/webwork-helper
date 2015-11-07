@@ -62,8 +62,11 @@ tr:hover .timer-hidden {
 }
 
 
-
-
+/* container for input boxes on problem pages */
+.input-container {
+	position: relative;
+	display: inline-block;
+}
 
 
 /* the popup thingy to the side */
@@ -264,6 +267,9 @@ input.codeshard {
 	background: transparent !important;
 	position: relative;
 }
+.codeshard-hidden {
+	display: none;
+}
 
 
 .highlight, .errors {
@@ -315,4 +321,60 @@ input.codeshard {
 .errors .syntaxError {
 	background: none;
 	color: white !important;
+}
+
+
+/*
+ * CSS for notes and note popups
+ */
+.note-container {
+	position: absolute;
+	display: inline-block;
+	margin-top: 5px;
+}
+.note-adder:before {
+	display: inline-block;
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+	content: "+";
+}
+.has-note:before {
+	width: 20px;
+	background: #FFFFA5;
+}
+.note {
+	position: absolute;
+	display: inline-block;
+	top: -18px;
+	left: 0;
+	width: 250px;
+	background: #FFFFA5;
+	border: 1px solid #D2D278;
+}
+.note-xmark {
+	width: 16px;
+	height: 16px;
+	float: right;
+}
+.note-xmark:after {
+	width: 16px;
+	height: 16px;
+	line-height: 16px;
+	content: "\2715";
+	font-weight: bold;
+	position: relative;
+	text-align: center;
+}
+.note-xmark:hover:after {
+	background: #aaa;
+}
+.note .body {
+	width: 240px; /* account for the 10px of total horizontal padding */
+	padding: 0 5px 5px 5px;
+	max-height: 200px;
+	overflow-y: scroll;
+}
+.note .body:focus {
+	outline: none; /* remove blue glow around focused elements */
 }

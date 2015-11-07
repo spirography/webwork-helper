@@ -75,10 +75,181 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
         });
     }
 
-
-
     // if the courses object was updated (we'll track that with this variable), save the changes
     var updateCourses = false;
+
+
+
+
+    /*
+     * Add all necessary elements to each input box.
+     * Previously, this was done using jQuery in the
+     * beginning of the problems.js file
+     */
+    if (PROBLEM) {
+
+        chrome.storage.sync.get(function(items) {
+            console.log(items);
+        });
+
+            // get all input boxes
+            var inputs = document.querySelectorAll("input.codeshard");
+
+            for (var i = 0; i < inputs.length; i++) {
+                // cache id
+                var id = inputs[i].getAttribute("id");
+                // set minimum width to equal initial width
+                inputs[i].style.minWidth = getComputedStyle(inputs[i])["width"];
+                // create container for input boxes
+                var container = document.createElement("div");
+                container.setAttribute("class", "input-container");
+                // add MathJax preview box
+                container.innerHTML = '<span class="MJpopup-container"><div id="' + id + 'preview" class="MJpopup"><span class="MJarrow"></span></div></span>';
+
+
+                // add temporary element (future location of the input tag)
+                var tempAnchor = document.createElement("a")
+                container.appendChild(tempAnchor);
+                // create highlight div
+                var highlight = document.createElement("div")
+                highlight.setAttribute("class", "highlight")
+                highlight.setAttribute("id", id+"highlight");
+                // set min-width
+                highlight.style.minWidth = getComputedStyle(inputs[i])["width"];
+                // append highlight div to container
+                container.appendChild(highlight);
+                // create errors div
+                var errors = document.createElement("div")
+                errors.setAttribute("class", "errors")
+                errors.setAttribute("id", id+"errors");
+                // append error div to container
+                container.appendChild(errors);
+                // create hidden answer div
+                var hidden = document.createElement("span");
+                hidden.setAttribute("class", "codeshard-hidden");
+                hidden.setAttribute("id", id+"hidden");
+                container.appendChild(hidden);
+
+                // add note container div information
+                container.innerHTML += '<span class="note-container"><span class="note-adder"></span><div class="note" style="display: none"><span class="note-xmark" id="' + parseInt(id.replace(/\D/g, ''), 10) + 'hidenote' + '"></span><div class="body" contenteditable="true"></div></div></span>';
+
+                // add container to page
+                inputs[i].parentNode.replaceChild(container, inputs[i]);
+                // add input box to container
+                container.replaceChild(inputs[i], container.getElementsByTagName("a")[0]);
+
+
+            }
+
+
+
+            /*
+             * Get the notes for that problem from storage
+             *
+             * parameters correspond to problem number
+             *
+             * 15fallmath150 {
+             *    1: "Blah blah"
+             *    3: "More notes"
+             *    7: "Even more notes.  Ain't life wonderful?"
+             * }
+             *
+             */
+            var noteName = CLASS+"_"+ASSIGNMENT+"_"+PROBLEM+"_notes";
+            var notes;
+            chrome.storage.sync.get(noteName, function(items) {
+                var lastError = chrome.runtime.lastError;
+                if (lastError) {
+                    console.log(lastError.message);
+                    return;
+                }
+                if (items[noteName] === undefined) { // no notes for that page
+                    notes = {};
+                } else { // at least one note
+                    notes = items[noteName];
+                }
+            
+                console.log(notes);
+
+
+            // add event listener to note-adder
+            var adders = document.getElementsByClassName("note-adder");
+            for (var i = 0; i < adders.length; i++) {
+                // add note contents if they exist
+                if (notes !== undefined) {
+                    if  (notes[i+1] !== undefined) { // add note content to the corresponding div
+                        adders[i].nextSibling.getElementsByClassName("body")[0].innerText = notes[i+1];
+                        adders[i].className += " has-note"; // color yellow for existing notes
+                        console.log("derp");
+                    }
+                }
+
+                // add event listeners
+                adders[i].addEventListener("click", showNote, false); // show note
+                adders[i].nextSibling.getElementsByClassName("note-xmark")[0].addEventListener("click", hideNote, false); // hide note
+            }
+
+            function showNote() {
+                this.nextSibling.style.display = "inline-block"; // show note
+                this.style.display = "none"; // hide "note-adder"
+            }
+
+            function hideNote() {
+                this.parentNode.style.display = "none"; // hide "note"
+
+                var thisAdder = this.parentNode.previousSibling;
+                thisAdder.style.display = "inline-block"; // show "note-adder"
+
+                // problem# + "hidenote"
+                var problemNumber = this.id.substr(0, this.id.length-8);
+                
+                var noteText = this.parentNode.getElementsByClassName("body")[0].innerText;
+                console.log(noteName);
+                console.log(noteText);
+
+                // TODO: edge case where notes[n] is null and noteText = ""
+                if (notes[problemNumber] !== noteText) {
+                    // if note is empty, reset to undefined
+                    if (noteText === "") {
+                        delete notes[problemNumber];
+                        // remove coloring from corresponding adder span
+                        thisAdder.className = thisAdder.className.replace(/(?:^|\s)has-note(?!\S)/g , '')
+                    } else {
+                        // color in
+                        thisAdder.className += " has-note"; // color yellow for existing notes
+                        // save note
+                        notes[problemNumber] = noteText;
+                    }
+                    console.log(notes);
+
+                    // if notes is empty, delete from storage as well
+                    if (Object.keys(notes).length === 0) {
+                        chrome.storage.sync.remove([noteName], function() {
+                            console.log("notes deleted");
+                        });
+                    } else { // save to storage
+                        chrome.storage.sync.set({[noteName]: notes}, function() {
+                            console.log("notes saved");
+                        });
+                    }
+                    
+                }
+
+            }
+
+        }); // notes get
+
+
+    }
+
+
+
+
+
+
+
+
+
 
 
     if (PROBLEM && courses[CLASS][ASSIGNMENT]["a"] < 100) {
@@ -241,6 +412,11 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
         this.parentNode.removeChild(this);
     };
     (document.head || document.documentElement).appendChild(s);
+
+
+
+
+
 
 }); // end of requestAll
 
