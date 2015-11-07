@@ -124,11 +124,6 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
                 errors.setAttribute("id", id+"errors");
                 // append error div to container
                 container.appendChild(errors);
-                // create hidden answer div
-                var hidden = document.createElement("span");
-                hidden.setAttribute("class", "codeshard-hidden");
-                hidden.setAttribute("id", id+"hidden");
-                container.appendChild(hidden);
 
                 // add note container div information
                 container.innerHTML += '<span class="note-container"><span class="note-adder"></span><div class="note" style="display: none"><span class="note-xmark" id="' + parseInt(id.replace(/\D/g, ''), 10) + 'hidenote' + '"></span><div class="body" contenteditable="true"></div></div></span>';

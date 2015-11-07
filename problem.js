@@ -46,7 +46,7 @@ $(document).ready(function() {
 
     /*
      * When the value inside an answer box changes, calculate the length
-     * by getting the length of the hidden <span>, and use that to increase
+     * by checking the number of characters, and use that to increase
      * the size of the input box if it doesn't fit
      */
     $('input.codeshard').on('input', function(e) {
@@ -56,16 +56,9 @@ $(document).ready(function() {
         // and cache element's content
         var value = $(this).val();
 
-        // insert the input text into the hidden <span>
-        // replace spaces with non-breaking spaces to prevent any of the input from being cut off
-        // TODO: get rid of hidden div?  Bracket highlighting could serve the same role
-        $('#' + id + 'hidden').text(value.replace(/ /g, '\u00a0'));
-
         // calculate the length of this text
-        var length = $('#' + id + 'hidden').width();
-        console.log(length);
+        var length = Math.floor(value.length*10.8); // width of one character in 18px Courier
 
-        // set width of the input box to the hidden <span> width
         // also set width of the corresponding .highlight <div> to get a white background
         // multiply by 1.05 because preview width seems to be messed up somewhere
         $(this).css('width', length*1.05+'px');

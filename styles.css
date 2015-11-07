@@ -254,7 +254,7 @@ tr:hover .timer-hidden {
  * highlighting overlays on inputs
  */
 
-.highlight, .errors, .codeshard, .codeshard-hidden {
+.highlight, .errors, .codeshard {
 	font-family: Courier;
 	font-size: 18px !important;
 	padding: 4px 2px !important;
@@ -267,11 +267,6 @@ input.codeshard {
 	background: transparent !important;
 	position: relative;
 }
-.codeshard-hidden {
-	display: none;
-	overflow: visible;
-}
-
 
 .highlight, .errors {
 	position: absolute;
