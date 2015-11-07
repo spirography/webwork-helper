@@ -63,13 +63,13 @@ $(document).ready(function() {
 
         // calculate the length of this text
         var length = $('#' + id + 'hidden').width();
+        console.log(length);
 
         // set width of the input box to the hidden <span> width
         // also set width of the corresponding .highlight <div> to get a white background
         // multiply by 1.05 because preview width seems to be messed up somewhere
         $(this).css('width', length*1.05+'px');
         $('#' + id + 'highlight').css('width', (length+10)+'px');   // needs to be done separately because of separate length
-
         /*
          * Convert the input value into TeX code
          */
