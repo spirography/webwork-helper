@@ -325,6 +325,7 @@ input.codeshard {
  */
 .note-container {
 	position: absolute;
+	z-index: 4;
 	display: inline-block;
 	margin-top: 5px;
 }
@@ -362,6 +363,7 @@ input.codeshard {
 	width: 250px;
 	background: #FFFFA5;
 	border: 1px solid #D2D278;
+	text-align: left;
 }
 .note-xmark {
 	width: 16px;

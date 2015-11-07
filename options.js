@@ -83,19 +83,13 @@ function restore_options() {
         for (var i = 0; i < courseInfo.length; i++) {
             courseInfo[i].addEventListener("click", function() {delete_course(this);});
         }
-        document.getElementById("total-memory-used").innerText = "Total memory used: " + memory_used() + " bytes";
+
+        // print out total sync storage space used by extension
+        chrome.storage.sync.getBytesInUse(null, function(bytesInUse) {
+            document.getElementById("total-memory-used").innerText = "Total memory used: " + bytesInUse + " bytes";
+        });
     });
 }
-
-
-/*
- * Returns the total memory used
- * by the extension, in bytes
- */
-function memory_used() {
-    return JSON.stringify(courses).length+7 + JSON.stringify(preferences).length+11;
-}
-
 
 document.addEventListener("DOMContentLoaded", restore_options);
 // when clicked, saves the user's preferences
