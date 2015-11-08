@@ -333,7 +333,7 @@ input.codeshard {
 	display: none;
 	width: 20px;
 	height: 20px;
-	background: black;
+	background: #003388;
 	color: white;
 	text-align: center;
 }
@@ -369,17 +369,15 @@ input.codeshard {
 	width: 16px;
 	height: 16px;
 	float: right;
-}
-.note-xmark:after {
-	width: 16px;
-	height: 16px;
-	line-height: 16px;
-	content: "\2715";
-	font-weight: bold;
-	position: relative;
+	margin: 2px;
 	text-align: center;
 }
-.note-xmark:hover:after {
+.note-xmark:after {
+	line-height: 2px;
+	content: "\2715";
+	font-weight: bold;
+}
+.note-xmark:hover {
 	background: #aaa;
 }
 .note .body {

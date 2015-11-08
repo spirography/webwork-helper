@@ -162,8 +162,6 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
                 } else { // at least one note
                     notes = items[noteName];
                 }
-            
-                console.log(notes);
 
 
             // add event listener to note-adder
@@ -174,7 +172,6 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
                     if  (notes[i+1] !== undefined) { // add note content to the corresponding div
                         adders[i].nextSibling.getElementsByClassName("body")[0].innerText = notes[i+1];
                         adders[i].parentNode.parentNode.className += " has-note"; // input and adder button yellow if it already has a note
-                        console.log("derp");
                     }
                 }
 
@@ -199,8 +196,6 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
                 var problemNumber = this.id.substr(0, this.id.length-8);
                 
                 var noteText = this.parentNode.getElementsByClassName("body")[0].innerText;
-                console.log(noteName);
-                console.log(noteText);
 
                 // TODO: edge case where notes[n] is null and noteText = ""
                 if (notes[problemNumber] !== noteText) {
@@ -215,16 +210,13 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
                         // save note
                         notes[problemNumber] = noteText;
                     }
-                    console.log(notes);
 
                     // if notes is empty, delete from storage as well
                     if (Object.keys(notes).length === 0) {
                         chrome.storage.sync.remove([noteName], function() {
-                            console.log("notes deleted");
                         });
                     } else { // save to storage
                         chrome.storage.sync.set({[noteName]: notes}, function() {
-                            console.log("notes saved");
                         });
                     }
                     
@@ -242,7 +234,7 @@ chrome.runtime.sendMessage({greeting:"requestAll"}, function (reply) {
 
 
 
-    if (PROBLEM) {
+    if (PROBLEM && courses[CLASS][ASSIGNMENT]["a"] < 100) {
 
     	// check the "you got x% right" at the bottom, update the corresponding problems array index if different
     	var percentage = /is \d+%/.exec(document.getElementsByClassName("scoreSummary")[0].children[0].innerText)
