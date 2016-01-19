@@ -23,8 +23,6 @@ $(document).ready(function() {
 
             // construct a Date object using the matches
             var duedate = new Date(parseInt(match[3], 10), parseInt(match[1]-1, 10), parseInt(match[2], 10), ((match[6] === "pm") ? parseInt(match[4])+12 : parseInt(match[4])), parseInt(match[5]));
-            
-
 
             var remainingTime = Math.floor((duedate - curdate) / 1000); // in seconds
 
@@ -34,7 +32,6 @@ $(document).ready(function() {
 
                     // add a timer <span>, which has the duedate countdown saved to it (measured in seconds)
                     $("<span/>", {"class": "timer-hidden"}).data("seconds", remainingTime).appendTo($(this));
-
                     // only style if the assignment has not been completed
                     if ($(this).children(".completionPercentage:first-child").text() === "100") {
 
@@ -101,15 +98,6 @@ $(document).ready(function() {
                 }
             }
     }
-    
+
 
 });
-
-
-
-
-
-
-
-
-
