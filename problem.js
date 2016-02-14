@@ -338,7 +338,6 @@
 
       string = string.replace(/((([^\d\w\)\]])(-))?(\d+(\.\d+)?))/g, "$3{$4$5}");   // numbers (includes support for negative numbers)
 
-      console.log(string);
 
       // variables (todo: optimize)
       for (var i = 0; i < string.length; i++) {
