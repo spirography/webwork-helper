@@ -2,6 +2,9 @@
  * This script runs on the CLASS PAGE of WeBWorK.  It colors in the due
  * dates depending on how much time is remaining
  */
+// TODO: update timer colors when countdowns reach certain threshholds?
+// TODO: rewrite timer creation code to be more portable?
+
 
 $(document).ready(function() {
 
@@ -31,7 +34,8 @@ $(document).ready(function() {
                 if (text.substr(0,4) === "open") {
 
                     // add a timer <span>, which has the duedate countdown saved to it (measured in seconds)
-                    $("<span/>", {"class": "timer-hidden"}).data("seconds", remainingTime).appendTo($(this));
+                    // also save the exact time the assignment is due, in seconds past epoch
+                    $("<span/>", {"class": "timer-hidden"}).data("seconds", remainingTime).data("duedate", Math.floor(duedate/1000)).appendTo($(this));
                     // only style if the assignment has not been completed
                     if ($(this).children(".completionPercentage:first-child").text() === "100") {
 
@@ -52,25 +56,52 @@ $(document).ready(function() {
                     $(this).parent().addClass("disabled");
                 }
 
-                displayTimer(this);
+                incrementTimer(this);
             }
         }
 
     });
 
+    /*
+     * Since the timer doesn't execute when the tab is not visible,
+     * the page detects when it regains focus and updates the timer
+     * so that the countdowns remain accurate
+     */
+    document.addEventListener("visibilitychange", function() {
+      if (!document.hidden) { // the tab with WeBWorK in it has regained focus and is no longer hidden
+        // update timers
+        var curtime = Math.floor(Date.now() / 1000); // the new current time, in seconds past epoch
+        $(".timer-hidden").each(function() {
+          $(this).data("seconds", $(this).data("duedate") - curtime); // calculate the new amount of time remaining
+          console.log(t - $(this).data("seconds"));
+        })
+      }
+    }, false);
+
     // update times
     window.setInterval(function(){
         // get the corresponding table rows
         $(".timer-hidden").each(function() {
-            displayTimer(this);
+            incrementTimer(this);
         });
     }, 1000);
 
 
     /*
+     * Sets a timer to the correct time
+     * used when timer is first created and
+     * when the tab is focused on again
+     * after being hidden
+     */
+    function setTimer(element) {
+      console.log(element.parent());
+    }
+
+
+    /*
      * Displays the time remaining before an open assignment is due
      */
-    function displayTimer(element) {
+    function incrementTimer(element) {
             // check if it has a timer attached
             var time = $(element).data("seconds");
             if (typeof time === "number") {
