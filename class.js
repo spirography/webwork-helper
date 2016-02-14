@@ -73,7 +73,6 @@ $(document).ready(function() {
         var curtime = Math.floor(Date.now() / 1000); // the new current time, in seconds past epoch
         $(".timer-hidden").each(function() {
           $(this).data("seconds", $(this).data("duedate") - curtime); // calculate the new amount of time remaining
-          console.log(t - $(this).data("seconds"));
         })
       }
     }, false);
