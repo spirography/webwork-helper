@@ -123,7 +123,12 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
 
         // add note container div information (ONLY IF NOTES ARE ENABLED)
         if (preferences.notes) {
-          container.innerHTML += '<span class="note-container"><span class="note-adder"></span><div class="note" style="display: none"><span class="note-xmark" id="' + parseInt(id.replace(/\D/g, ''), 10) + 'hidenote' + '"></span><div class="body" placeholder="Type notes about a problem here" contenteditable="true"></div></div></span>';
+            var noteID = (/([\d|_]{4,})/g).exec(id)[1]; // note ID is the numerical/underscore part of the input box ID
+            noteID = noteID.replace(/^0+/, ""); // remove leading zeroes
+
+          container.innerHTML += '<span class="note-container"><span class="note-adder"></span><div class="note" style="display: none"><span class="note-xmark" id="'
+          + noteID + 'hidenote' +
+          '"></span><div class="body" placeholder="Type notes about a problem here" contenteditable="true"></div></div></span>';
         }
 
         // add container to page
@@ -161,16 +166,23 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
             notes = {};
           } else { // at least one note
             notes = items[noteName];
+            console.log(noteName);
+            console.log(notes);
           }
 
 
           // add event listener to note-adder
           var adders = document.getElementsByClassName("note-adder");
-          for (var i = 0; i < adders.length; i++) {
+          for (var i = 0; i < adders.length; i++) { // iterate over them and check if there is a matching note
             // add note contents if they exist
             if (notes !== undefined) {
-              if  (notes[i+1] !== undefined) { // add note content to the corresponding div
-                adders[i].nextSibling.getElementsByClassName("body")[0].innerText = notes[i+1];
+                // get id and see if it matches
+                var xmarkID = adders[i].nextSibling.getElementsByClassName("note-xmark")[0].id;
+                xmarkID = xmarkID.substring(0, xmarkID.length-8);
+                console.log(xmarkID);
+
+              if (notes[xmarkID] !== undefined) { // add note content to the corresponding div
+                adders[i].nextSibling.getElementsByClassName("body")[0].innerText = notes[xmarkID];
                 adders[i].parentNode.parentNode.className += " has-note"; // input and adder button yellow if it already has a note
               }
             }
@@ -326,7 +338,7 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
       for (var i = 1; i < tableRows.length; i++) { // skip the first row (header)
         // get the assignent name (replace spaces with underscores)
         var assignmentName = tableRows[i].children[1].innerText.replace(/ /g, "_");
-        
+
         // if the assignment doesn't exist in the courses object, add it
         if (courses[CLASS][assignmentName] === undefined) {
           courses[CLASS][assignmentName] = {
