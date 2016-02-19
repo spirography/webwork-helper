@@ -385,6 +385,7 @@ input.codeshard {
 	padding: 0 5px 5px 5px;
 	max-height: 200px;
 	overflow-y: scroll;
+	white-space: normal; /* needed for WeBWorK tables */
 }
 .note .body[contentEditable=true]:empty:not(:focus):before{ /* the placeholder text when .body is empty */
   content: attr(placeholder);
