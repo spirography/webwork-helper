@@ -181,6 +181,7 @@
           // mode 2 = rainbow highlighting of one bracket
           // mode 3 = rainbow highlighting of all brackets
           var string = $("#"+id).val();
+          string = string.replace(/ /g, "\u00A0"); // make all spaces non-breaking
 
           // timeout because otherwise clicking on the input will return 0
           setTimeout(function() {
