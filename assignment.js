@@ -26,7 +26,7 @@ $(document).ready(function() {
             // calculate position of the stop, in px
             var percentage = parseInt($(n).children().last().text().replace("%", ""), 10);
             var separation = Math.ceil(width*percentage/100 + rect.left);
-            console.log($(n).children().first().text());
+
             // style the gradient based on how much is complete
             if (percentage === 100) {
                 n.style.background = "#dff0d8"; // 100% = all green
