@@ -126,9 +126,9 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
             var noteID = (/([\d|_]{4,})/g).exec(id)[1]; // note ID is the numerical/underscore part of the input box ID
             noteID = noteID.replace(/^0+/, ""); // remove leading zeroes
 
-          container.innerHTML += '<span class="note-container"><span class="note-adder"></span><div class="note" style="display: none"><span class="note-xmark" id="'
-          + noteID + 'hidenote' +
-          '"></span><div class="body" placeholder="Type notes about a problem here" contenteditable="true"></div></div></span>';
+            container.innerHTML += '<span class="note-container"><span class="note-adder"></span><div class="note" style="display: none"><span class="note-xmark" id="'
+            + noteID + 'hidenote' +
+            '"></span><div class="body" placeholder="Type notes about a problem here" contenteditable="true"></div></div></span>';
         }
 
         // add container to page
