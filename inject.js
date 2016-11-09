@@ -15,11 +15,11 @@ var url = window.location.href;
 
 // get the CLASS, ASSIGNMENT, and PROBLEM that WeBWorK is currently on
 var CLASS, ASSIGNMENT, PROBLEM;
-var captured = /math\.webwork\.rochester\.edu\/webwork2(\/(\w+))?(\/(\w+))?(\/(\w+))?/.exec(url);
+var captured = /math\.webwork\.rochester\.edu\/webwork2(?:\/(\w+))?(?:\/(\w+))?(?:\/(\w+))?/.exec(url);
 try {   // if the main directory isn't "webwork2", then throw error (not on the WeBWorK website)
-CLASS  = captured[2];
-ASSIGNMENT = captured[4];
-PROBLEM = captured[6];
+CLASS  = captured[1];
+ASSIGNMENT = captured[2];
+PROBLEM = captured[3];
 } catch (e) {
   // fail silently - this block is here mainly because I don't want a huge chain of "if-else"s
 }
