@@ -63,7 +63,7 @@ function delete_course(element) {
 function restore_options() {
     // load preferences from background.js
     chrome.runtime.sendMessage({greeting: "requestAll"}, function (items) {
-        
+
         preferences = items.preferences;
         courses = items.courses;
 

@@ -131,29 +131,38 @@
 
 
 
+      function showAnswerPreviewDiv(elementID) {
+          var value = $('#' + elementID).val();
+          // only show if there is some text in the input field
+          if (value.length >= 3) {   // slightly differnet from the similar code above
+              $('#' + elementID + 'preview').show().animate({opacity: 1}, 200);
+          }
+      }
 
+      function hideAnswerPreviewDiv(elementID, isHiding) {
+          $('#' + elementID + 'preview').animate({opacity: 0}, 200, function() {
+              if (isHiding) $('#' + elementID + 'preview').hide();
+          });
+
+          // remove all bracket highlighting
+          $('#' + elementID + 'highlight').text("");
+          $('#' + elementID + 'errors').text("");
+      }
 
       /*
        * When an input is focused, show the corresponding preview div
        * Opacity is animated because animating show() causes issues with the popup sticking off the edge of the screen
        */
-      $('input.codeshard').focus(function(e) {
-          var value = $(this).val();
-          // only show if there is some text in the input field
-          if (value.length >= 3) {   // slightly differnet from the similar code above
-              $('#' + e.target.id + 'preview').show().animate({opacity: 1}, 200);
-          }
+       $('input.codeshard').focus(function(e){showAnswerPreviewDiv(this.id)});
+       $('input.codeshard').blur(function(e){hideAnswerPreviewDiv(this.id, true)});
 
+      $('.MJpopup').mouseenter(function(e) { // don't hide so that element is still there and doesn't trigger mouseexit event as soon as animation is finished
+          hideAnswerPreviewDiv(this.id.slice(0, -7), false);
       });
-      // and hide when unfocused
-      $('input.codeshard').blur(function(e) {
-          $('#' + e.target.id + 'preview').animate({opacity: 0}, 200, function() {
-              $('#' + e.target.id + 'preview').hide();
-          });
-
-          // remove all bracket highlighting
-          $('#' + e.target.id + 'highlight').text("");
-          $('#' + e.target.id + 'errors').text("");
+      $('.MJpopup').mouseleave(function(e) {
+          // only show if still focused
+          if ($('#' + this.id.slice(0, -7)).is(":focus"))
+            showAnswerPreviewDiv(this.id.slice(0, -7));
       });
 
 
