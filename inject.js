@@ -166,8 +166,8 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
             notes = {};
           } else { // at least one note
             notes = items[noteName];
-            console.log(noteName);
-            console.log(notes);
+            // console.log(noteName);
+            // console.log(notes);
           }
 
 
@@ -179,7 +179,6 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
                 // get id and see if it matches
                 var xmarkID = adders[i].nextSibling.getElementsByClassName("note-xmark")[0].id;
                 xmarkID = xmarkID.substring(0, xmarkID.length-8);
-                console.log(xmarkID);
 
               if (notes[xmarkID] !== undefined) { // add note content to the corresponding div
                 adders[i].nextSibling.getElementsByClassName("body")[0].innerText = notes[xmarkID];
