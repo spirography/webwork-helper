@@ -19,7 +19,7 @@ $(document).ready(function() {
 
 
         // get percentage that
-        $.map($(".problem_set_table tr:gt(0)"), function(n) {
+        $.map($(".problem_set_table tr:not(:first-child)"), function(n) {
             // first, get the offset from the left side of the screen, in px
             var rect = n.getBoundingClientRect();
             var width = $(n).width()+table_padding;
@@ -33,7 +33,8 @@ $(document).ready(function() {
             } else if (percentage === 0) {
                 n.style.background = "#f2dede"; // 0% = all red
             } else {
-                n.style.background = "linear-gradient( to right, #dff0d8, #dff0d8 "+separation+"px, #f2dede "+separation+"px, #f2dede 1600px) fixed";
+                // n.style.background = "linear-gradient( to right, #dff0d8, #dff0d8 "+separation+"px, #f2dede "+separation+"px, #f2dede 1600px) fixed";
+                n.style.background = "#f0ad4e"
             }
         });
     }
@@ -44,6 +45,6 @@ $(document).ready(function() {
      */
     $(window).resize(drawGradients());
     // setTimeout(function(){ $(window).trigger("resize"); }, 100);
-    $(window).trigger("resize");
+    drawGradients();
 
 });
