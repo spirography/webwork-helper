@@ -15,7 +15,7 @@ var url = window.location.href;
 
 // get the CLASS, ASSIGNMENT, and PROBLEM that WeBWorK is currently on
 var CLASS, ASSIGNMENT, PROBLEM;
-var captured = /math\.webwork\.rochester\.edu\/webwork2(?:\/(\w+))?(?:\/(\w+))?(?:\/(\w+))?/.exec(url);
+var captured = /math\.webwork\.rochester\.edu\/webwork2(?:\/([\w\.\-\ ]+))?(?:\/([\w\.\-\ ]+))?(?:\/(\d+))?/.exec(url);
 try {   // if the main directory isn't "webwork2", then throw error (not on the WeBWorK website)
 CLASS  = captured[1];
 ASSIGNMENT = captured[2];
