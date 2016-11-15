@@ -174,9 +174,10 @@
        * larger version of the image in question
        */
       $('.wwImage').mouseenter(function() {
-          console.log(this.width);
-          console.log($(this).prev().children().css("width"));
-          $(this).prev().children().stop().css("display", "inline-block").animate({opacity: 1}, 200); // .css instead of .show because it changes style to block instead, which messes with alignment
+          // only show popup if image is not full size
+          if (this.width + "px" !== $(this).prev().children().css("width")) {
+              $(this).prev().children().stop().css("display", "inline-block").animate({opacity: 1}, 200); // .css instead of .show because it changes style to block instead, which messes with alignment
+          }
       });
       $('.wwImage').mouseleave(function() {
           // hide element
