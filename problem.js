@@ -13,7 +13,7 @@
 
 
       // initialize preview images
-      $.map($("img"), function(n) {
+      $.map($(".problem-content img"), function(n) {
           // create offscreen to determine width and height
           var testImage = new Image();
           testImage.src = $(n).attr("src");
@@ -21,6 +21,9 @@
           // get the native width and height of the image
           var imageWidth = testImage.width;
           var imageHeight = testImage.height;
+          // add class name so that the later image hover event doesn't work on popups too
+          $(n).addClass('wwImage');
+
           // append to DOM, shift to the right and upwards a little
           $(n).before('<span class="topPopup-container"><div class="topPopup" style="width:'+imageWidth+'px; height:'+imageHeight+'px;left:'+$(n).width()/2+'px;"><img src="'+$(n).attr('src')+'"></div></span>');
       });
@@ -170,10 +173,12 @@
        * When hovering over images, show a popup with a
        * larger version of the image in question
        */
-      $('img').mouseenter(function() {
+      $('.wwImage').mouseenter(function() {
+          console.log(this.width);
+          console.log($(this).prev().children().css("width"));
           $(this).prev().children().stop().css("display", "inline-block").animate({opacity: 1}, 200); // .css instead of .show because it changes style to block instead, which messes with alignment
       });
-      $('img').mouseleave(function() {
+      $('.wwImage').mouseleave(function() {
           // hide element
           $(this).prev().children().stop().animate({opacity: 0}, 200, function () {
               $(this).hide();
