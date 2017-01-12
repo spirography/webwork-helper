@@ -9,20 +9,37 @@
 * space in storage.sync (courses object has a size cap of 8kb)
 */
 
+// hardcoded U of R webwork directory
+var ROCHESTER_URL = "https://math.webwork.rochester.edu/webwork2";
 
 // because chrome.tabs.getCurrent(function(tab) can only be run from background pages, use window.location.href instead
 var url = window.location.href;
 
 // get the CLASS, ASSIGNMENT, and PROBLEM that WeBWorK is currently on
-var CLASS, ASSIGNMENT, PROBLEM;
-var captured = /math\.webwork\.rochester\.edu\/webwork2(?:\/([\w\.\-\ ]+))?(?:\/([\w\.\-\ ]+))?(?:\/(\d+))?/.exec(url);
+var PATH, CLASS, ASSIGNMENT, PROBLEM;
+// var captured = /math\.webwork\.rochester\.edu\/webwork2(?:\/([\w\.\-\ ]+))?(?:\/([\w\.\-\ ]+))?(?:\/(\d+))?/.exec(url);
+var captured = /(.+\/webwork2)(?:\/([\w\.\-\_]+))?(?:\/([\w\.\-\_]+))?(?:\/(\d+))?/.exec(url);
 try {   // if the main directory isn't "webwork2", then throw error (not on the WeBWorK website)
-CLASS  = captured[1];
-ASSIGNMENT = captured[2];
-PROBLEM = captured[3];
+PATH = captured[1];
+CLASS  = captured[2];
+ASSIGNMENT = captured[3];
+PROBLEM = captured[4];
 } catch (e) {
   // fail silently - this block is here mainly because I don't want a huge chain of "if-else"s
+  console.log("error finding webwork directory");
 }
+console.log("PATH = ", PATH);
+console.log("CLASS = ", CLASS);
+console.log("ASSIGNMENT = ", ASSIGNMENT);
+console.log("PROBLEM = ", PROBLEM);
+
+// check if the webwork server is for the University of Rochester (to enable extra features)
+if (PATH === ROCHESTER_URL) { // TODO: check for http / https differences?
+    console.log("Meliora!");
+    // save for posterity
+}
+
+
 
 var courses, preferences;
 

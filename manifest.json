@@ -20,7 +20,7 @@
 
   "content_scripts": [
     {
-      "matches": ["*://*.webwork.rochester.edu/*"],
+      "matches": ["*://*/webwork2*"],
       "js": ["inject.js"],
       "css" : ["styles.css"]
     }
