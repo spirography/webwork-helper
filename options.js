@@ -76,11 +76,16 @@ function restore_options() {
         // course list
         var courseInfo = document.getElementById("courses");
         for (var key in courses) {
-            if (courses.hasOwnProperty(key)) {
+            if (courses.hasOwnProperty(key)) { // TODO: combine code in popup.js with this
                 // get name info with regexp (same code as in popup.js)
                 var match = /((?:fall)|(?:spring)|(?:summer))(\d+)(mth)(\d+)/.exec(key);
-                var formattedname = match[1].substr(0, 1).toUpperCase() + match[1].substr(1) + " Math " + match[4];
-                courseInfo.innerHTML += '<div class="delete-course" value="'+key+'">' + formattedname + '<span class="object-size">'+JSON.stringify(courses[key]).length+' bytes</span>' + '</div>';
+                var formattedname;
+                if (match === null) {
+                    formattedname = key;
+                } else {
+                    formattedname = match[1].substr(0, 1).toUpperCase() + match[1].substr(1) + " Math " + match[4];
+                }
+                courseInfo.innerHTML += '<div class="delete-course" value="'+key+'">' + formattedname + '<span class="object-size">'+JSON.stringify(courses[key]).length + ' bytes</span>' + '</div>';
             }
         }
         courseInfo = document.getElementsByClassName("delete-course");
