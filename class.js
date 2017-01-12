@@ -4,7 +4,8 @@
  */
 // TODO: update timer colors when countdowns reach certain threshholds?
 // TODO: rewrite timer creation code to be more portable?
-
+var TIME_WARNING = 3600*24*2; // 2 days
+var TIME_FLASHING = 3600*12; // 12 hours
 
 $(document).ready(function() {
 
@@ -44,9 +45,9 @@ $(document).ready(function() {
 
                     } else {
                         // style the due date text depending on how much time is left
-                        if (remainingTime < 3600*12) { // 12 hours left
+                        if (remainingTime < TIME_FLASHING) { // 12 hours left
                             $(this).parent().addClass("WWflashing");
-                        } else if (remainingTime < 3600*48) {  // 48 hours left
+                        } else if (remainingTime < TIME_WARNING) {  // 48 hours left
                             $(this).parent().addClass("WWwarning");
                         } else {
                             $(this).parent().addClass("WWnormal");
@@ -73,7 +74,7 @@ $(document).ready(function() {
         var curtime = Math.floor(Date.now() / 1000); // the new current time, in seconds past epoch
         $(".timer-hidden").each(function() {
           $(this).data("seconds", $(this).data("duedate") - curtime); // calculate the new amount of time remaining
-        })
+        });
       }
     }, false);
 

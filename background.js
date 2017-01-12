@@ -2,6 +2,15 @@
 
 var courses, preferences;
 
+var foo = {name:"jeremy",school:"rochester",favNumber:11};
+chrome.storage.local.set(foo, function(callback) {
+    console.log("foo saved!");
+
+    chrome.storage.local.get(foo, function(callback) {
+        console.log("foo in storage: ", callback);
+    });
+});
+
 chrome.runtime.onInstalled.addListener(function(details){
 
     if(details.reason == "install"){
@@ -88,6 +97,28 @@ chrome.runtime.onMessage.addListener(				// https://developer.chrome.com/extensi
                 console.log("POSSIBLE ERROR");
 			sendResponse({courses:courses,preferences:preferences});
 		}
+        else if (request.greeting === "requestNotes") { // gets notes for a specific problem
+            // which notes to send out
+            if (request.noteName !== undefined && request.noteName !== null) {
+
+                chrome.storage.sync.get(request.noteName, function(items) {
+                    var lastError = chrome.runtime.lastError;
+                    if (lastError) {
+                      console.log(lastError.message);
+                      return;
+                    }
+                    if (items[request.noteName] === undefined) { // no notes for that page
+                      sendResponse({}); // empty object
+                    } else { // at least one note
+                        console.log("items for request:",items[request.noteName]);
+                        console.log("localstorage: ", localStorage);
+                      sendResponse(items[request.noteName])
+                    }
+                });
+            } else {
+                sendResponse({foo:"dero"});
+            }
+        }
         else if (request.greeting === "updateCourses") {	// inject.js has an updated version of the courses object
 			courses = request.information;
             // update in storage.sync

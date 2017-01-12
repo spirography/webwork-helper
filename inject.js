@@ -154,6 +154,12 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
       *
       */
       if (preferences.notes) {
+          var stringID = CLASS+"_"+ASSIGNMENT+"_"+PROBLEM+"_notes"
+          chrome.runtime.sendMessage({greeting:"requestNotes",noteName:stringID}, function(reply) {
+              console.log("REPLY: ", reply);
+          });
+
+
         var noteName = CLASS+"_"+ASSIGNMENT+"_"+PROBLEM+"_notes";
         var notes;
         chrome.storage.sync.get(noteName, function(items) {
@@ -162,6 +168,7 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
             console.log(lastError.message);
             return;
           }
+          console.log("ITEMS: ", items);
           if (items[noteName] === undefined) { // no notes for that page
             notes = {};
           } else { // at least one note
@@ -169,7 +176,6 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
             // console.log(noteName);
             // console.log(notes);
           }
-
 
           // add event listener to note-adder
           var adders = document.getElementsByClassName("note-adder");
@@ -214,7 +220,7 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
               if (noteText === "") {
                 delete notes[problemNumber];
                 // remove coloring from corresponding container div
-                thisContainer.className = thisContainer.className.replace(/(?:^|\s)has-note(?!\S)/g , '')
+                thisContainer.className = thisContainer.className.replace(/(?:^|\s)has-note(?!\S)/g , '');
               } else {
                 // color in
                 thisContainer.className += " has-note"; // color yellow for existing notes
