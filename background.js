@@ -2,14 +2,14 @@
 
 var courses, preferences;
 
-var foo = {name:"jeremy",school:"rochester",favNumber:11};
-chrome.storage.local.set(foo, function(callback) {
-    console.log("foo saved!");
-
-    chrome.storage.local.get(foo, function(callback) {
-        console.log("foo in storage: ", callback);
-    });
-});
+// var foo = {name:"john doe",school:"rochester",favNumber:11};
+// chrome.storage.local.set(foo, function(callback) {
+//     console.log("foo saved!");
+//
+//     chrome.storage.local.get(foo, function(callback) {
+//         console.log("foo in storage: ", callback);
+//     });
+// });
 
 chrome.runtime.onInstalled.addListener(function(details){
 

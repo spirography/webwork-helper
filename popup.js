@@ -31,24 +31,34 @@ function gotoWeBWorK() {
     	// use RegExp to get the attributes from the classname
     	var match = /((?:fall)|(?:spring)|(?:summer))(\d+)(mth)(\d+)/.exec(lastclass);
     	//var linktext = "WeBWorK for " + match[1].substr(0, 1).toUpperCase() + match[1].substr(1) + " Math " + match[4];
-    	var classname = "Math " + match[4];
+		var classname;
+		if (match == null) { // not in the nice predefined format
+			classname = lastclass;
+		} else {
+			classname = "Math " + match[4];
+		}
+
     	var linktext = "WeBWorK for " + classname;
 
     	// update the link on the button
-    	document.getElementById("goto_webwork").href = "https://math.webwork.rochester.edu/webwork2/" + lastclass + "/";
+    	document.getElementById("goto_webwork").href = items.path + "/" + lastclass + "/";
     	document.getElementById("webwork_div").innerText = linktext;
 
     	// create a second button with a link to the course website
-    	var link = document.createElement("A");	// set up link
-    	link.href = "https://www.math.rochester.edu/courses/current/" + match[4] + "/";
-    	link.target = "_blank";
-    	var div = document.createElement("DIV");	// set up inner div
-    	div.innerText = classname + " Website";
-    	div.className = "button"
-    	link.appendChild(div);
-    	var menu = document.getElementById("menu");	// add to DOM
-    	menu.appendChild(document.createElement("BR"))
-    	menu.appendChild(link);
+		// ROCHESTER ONLY FEATURE
+		if (items.rochester && match[4] !== null) {
+			var link = document.createElement("A");	// set up link
+	    	link.href = "https://www.math.rochester.edu/courses/current/" + match[4] + "/";
+	    	link.target = "_blank";
+	    	var div = document.createElement("DIV");	// set up inner div
+	    	div.innerText = classname + " Website";
+	    	div.className = "button"
+	    	link.appendChild(div);
+	    	var menu = document.getElementById("menu");	// add to DOM
+	    	menu.appendChild(document.createElement("BR"))
+	    	menu.appendChild(link);
+		}
+
 
 
     });

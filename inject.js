@@ -56,6 +56,9 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
     courses = reply.courses;
     preferences = reply.preferences;
 
+    // better to save preferences in one location instead of scattered all over the file
+    var shouldPreferencesBeUpdated = false;
+
     // add the preferences to the body
     var script = document.createElement('script');
     script.textContent = "var preferences="+JSON.stringify(preferences)+";";
@@ -76,15 +79,15 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
     // change the lastclass preference to this class if they are different
     if (preferences.lastclass === undefined || (preferences.lastclass !== CLASS && CLASS !== undefined)) {
       preferences.lastclass = CLASS;
-
-      // update background.js preferences info
-      chrome.runtime.sendMessage({greeting:"updatePreferences", information:preferences}, function (reply) {
-        if (lastError) {
-          console.log(lastError.message);
-          return;
-        }
-      });
+      shouldPreferencesBeUpdated = true;
     }
+
+    // save current webwork path
+    if (preferences.path !== PATH) {
+        preferences.path = PATH;
+        shouldPreferencesBeUpdated = true;
+    }
+
 
     // check if the webwork server is for the University of Rochester (to enable extra features)
     if (PATH === ROCHESTER_URL) { // TODO: check for http / https differences?
@@ -92,28 +95,29 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
         if (preferences.rochester !== true) {
             // save for posterity
             preferences.rochester = true;
-            chrome.runtime.sendMessage({greeting:"updatePreferences", information:preferences}, function (reply) {
-              if (lastError) {
-                console.log(lastError.message);
-                return;
-              }
-            });
+            shouldPreferencesBeUpdated = true;
+
         }
     } else {
         if (preferences.rochester === true) { // remove
             // save for posterity
             preferences.rochester = false;
-            chrome.runtime.sendMessage({greeting:"updatePreferences", information:preferences}, function (reply) {
-              if (lastError) {
-                console.log(lastError.message);
-                return;
-              }
-            });
+            shouldPreferencesBeUpdated = true;
         }
     }
 
     // if the courses object was updated (we'll track that with this variable), save the changes
     var updateCourses = false;
+
+    // update preferences if necessary
+    if (shouldPreferencesBeUpdated) {
+        chrome.runtime.sendMessage({greeting:"updatePreferences", information:preferences}, function (reply) {
+          if (lastError) {
+            console.log(lastError.message);
+            return;
+          }
+        });
+    }
 
 
 
