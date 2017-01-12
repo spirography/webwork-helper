@@ -46,7 +46,7 @@ function gotoWeBWorK() {
 
     	// create a second button with a link to the course website
 		// ROCHESTER ONLY FEATURE
-		if (items.rochester && match[4] !== null) {
+		if (items.rochester && match !== null) {
 			var link = document.createElement("A");	// set up link
 	    	link.href = "https://www.math.rochester.edu/courses/current/" + match[4] + "/";
 	    	link.target = "_blank";
