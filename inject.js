@@ -33,12 +33,6 @@ console.log("CLASS = ", CLASS);
 console.log("ASSIGNMENT = ", ASSIGNMENT);
 console.log("PROBLEM = ", PROBLEM);
 
-// check if the webwork server is for the University of Rochester (to enable extra features)
-if (PATH === ROCHESTER_URL) { // TODO: check for http / https differences?
-    console.log("Meliora!");
-    // save for posterity
-}
-
 
 
 var courses, preferences;
@@ -90,6 +84,32 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
           return;
         }
       });
+    }
+
+    // check if the webwork server is for the University of Rochester (to enable extra features)
+    if (PATH === ROCHESTER_URL) { // TODO: check for http / https differences?
+        console.log("Meliora!");
+        if (preferences.rochester !== true) {
+            // save for posterity
+            preferences.rochester = true;
+            chrome.runtime.sendMessage({greeting:"updatePreferences", information:preferences}, function (reply) {
+              if (lastError) {
+                console.log(lastError.message);
+                return;
+              }
+            });
+        }
+    } else {
+        if (preferences.rochester === true) { // remove
+            // save for posterity
+            preferences.rochester = false;
+            chrome.runtime.sendMessage({greeting:"updatePreferences", information:preferences}, function (reply) {
+              if (lastError) {
+                console.log(lastError.message);
+                return;
+              }
+            });
+        }
     }
 
     // if the courses object was updated (we'll track that with this variable), save the changes

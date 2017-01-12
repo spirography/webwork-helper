@@ -39,25 +39,28 @@ chrome.runtime.onInstalled.addListener(function(details){
         console.log("Successfully updated from " + details.previousVersion + " to " + chrome.runtime.getManifest().version);
 
         // update courses to new notation
-        chrome.storage.sync.get(["courses", "preferences"], function(items) {
-            courses = items.courses;
-            console.log(items);
-            // convert to new notation
-            courses = JSON.parse(JSON.stringify(courses).replace(/average/g, "a").replace(/problems/g, "p"));
-            //courses = JSON.parse(JSON.stringify(courses).replace(/\"a\"/g, "\"average\"").replace(/\"p\"/g, "\"problems\""));
-            // and update
-            console.log(JSON.stringify(courses));
-            chrome.storage.sync.set({courses}, function(callback) {
-                // check that the message was successfully received
-                var lastError = chrome.runtime.lastError;
-                if (lastError) {
-                    console.log(lastError.message);
-                    return;
-                }
-                console.log("WeBWorK course information converted to 1.5+ notation");
+        console.log("type:", typeof details.previousVersion);
+        if (details.previousVersion < 1.5) { // TODO: lexicographic comparison
+            chrome.storage.sync.get(["courses", "preferences"], function(items) {
+                courses = items.courses;
+                console.log(items);
+                // convert to new notation
+                courses = JSON.parse(JSON.stringify(courses).replace(/average/g, "a").replace(/problems/g, "p"));
+                //courses = JSON.parse(JSON.stringify(courses).replace(/\"a\"/g, "\"average\"").replace(/\"p\"/g, "\"problems\""));
+                // and update
+                console.log(JSON.stringify(courses));
+                chrome.storage.sync.set({courses}, function(callback) {
+                    // check that the message was successfully received
+                    var lastError = chrome.runtime.lastError;
+                    if (lastError) {
+                        console.log(lastError.message);
+                        return;
+                    }
+                    console.log("WeBWorK course information converted to 1.5+ notation");
 
+                });
             });
-        });
+        }
 
     }
 });
