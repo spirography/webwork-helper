@@ -32,7 +32,7 @@ $(document).ready(function() {
 
             if (remainingTime > 0) {
                 // only apply the below if the assignment is open
-                if (text.substr(0,4) === "open") {
+                if (text.substr(0,4).toLowerCase() === "open") {
 
                     // add a timer <span>, which has the duedate countdown saved to it (measured in seconds)
                     // also save the exact time the assignment is due, in seconds past epoch
