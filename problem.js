@@ -431,6 +431,11 @@
                   depth++;
 
               } else if (string.charAt(i) === "}") {  // look for closing brackets
+                  if (string.charAt(i+1) === "!") { // factorial stuff
+                      console.log('found factorial!');
+                      string = string.substr(0, i) + '!}' + string.substr(i+2);
+                      i++;
+                  }
                   // dive outward
                   depth--;
                   // check for errors

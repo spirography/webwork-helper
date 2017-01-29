@@ -203,7 +203,7 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
 
         var noteName = CLASS+"_"+ASSIGNMENT+"_"+PROBLEM+"_notes";
         var notes;
-        chrome.storage.sync.get(noteName, function(items) {
+        chrome.storage.local.get(noteName, function(items) {
           var lastError = chrome.runtime.lastError;
           if (lastError) {
             console.log(lastError.message);
@@ -271,10 +271,10 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
 
               // if notes is empty, delete from storage as well
               if (Object.keys(notes).length === 0) {
-                chrome.storage.sync.remove([noteName], function() {
+                chrome.storage.local.remove([noteName], function() {
                 });
               } else { // save to storage
-                chrome.storage.sync.set({[noteName]: notes}, function() {
+                chrome.storage.local.set({[noteName]: notes}, function() {
                 });
               }
 
