@@ -3,10 +3,10 @@
 var courses, preferences;
 
 // var foo = {name:"john doe",school:"rochester",favNumber:11};
-// chrome.storage.local.set(foo, function(callback) {
+// chrome.storage.sync.set(foo, function(callback) {
 //     console.log("foo saved!");
 //
-//     chrome.storage.local.get(foo, function(callback) {
+//     chrome.storage.sync.get(foo, function(callback) {
 //         console.log("foo in storage: ", callback);
 //     });
 // });
@@ -57,7 +57,7 @@ chrome.runtime.onInstalled.addListener(function(details){
             notes: false
         };
         console.log(preferences);
-        chrome.storage.local.set({preferences}, function() {
+        chrome.storage.sync.set({preferences}, function() {
             var lastError = chrome.runtime.lastError;
             if (lastError) {
                 console.log(lastError.message);
@@ -72,7 +72,7 @@ chrome.runtime.onInstalled.addListener(function(details){
         // update courses to new notation
         console.log("type:", typeof details.previousVersion);
         if (versionComp(details.previousVersion, "1.5") < 0) {
-            chrome.storage.local.get(["courses", "preferences"], function(items) {
+            chrome.storage.sync.get(["courses", "preferences"], function(items) {
                 courses = items.courses;
                 console.log(items);
                 // convert to new notation
@@ -80,7 +80,7 @@ chrome.runtime.onInstalled.addListener(function(details){
                 //courses = JSON.parse(JSON.stringify(courses).replace(/\"a\"/g, "\"average\"").replace(/\"p\"/g, "\"problems\""));
                 // and update
                 console.log(JSON.stringify(courses));
-                chrome.storage.local.set({courses}, function(callback) {
+                chrome.storage.sync.set({courses}, function(callback) {
                     // check that the message was successfully received
                     var lastError = chrome.runtime.lastError;
                     if (lastError) {
@@ -94,7 +94,8 @@ chrome.runtime.onInstalled.addListener(function(details){
         }
 
         // switch to localstorage, change how notes are stored
-        if (versionComp(details.previousVersion, "1.6.6") < 0) {
+        // PUT ON HOLD FOR NOW
+        /*if (versionComp(details.previousVersion, "1.6.6") < 0) {
             console.log("switching to localStorage...");
             // get EVERYTHING
             chrome.storage.sync.get(function(items) {
@@ -113,7 +114,7 @@ chrome.runtime.onInstalled.addListener(function(details){
                     console.log("Preferences moved over to localStorage");
                 });
             });
-        }
+        }*/
 
     }
 });
@@ -122,7 +123,7 @@ chrome.runtime.onInstalled.addListener(function(details){
 
 // load course information and preferences from storage upon startup
 console.log("COURSES:", courses);
-chrome.storage.local.get(["courses", "preferences"], function(items) {
+chrome.storage.sync.get(["courses", "preferences"], function(items) {
 	var lastError = chrome.runtime.lastError;
     if (lastError) {
         console.log(lastError.message);
@@ -157,7 +158,7 @@ chrome.runtime.onMessage.addListener(				// https://developer.chrome.com/extensi
             // which notes to send out
             if (request.noteName !== undefined && request.noteName !== null) {
 
-                chrome.storage.local.get(request.noteName, function(items) {
+                chrome.storage.sync.get(request.noteName, function(items) {
                     var lastError = chrome.runtime.lastError;
                     if (lastError) {
                       console.log(lastError.message);
@@ -178,7 +179,7 @@ chrome.runtime.onMessage.addListener(				// https://developer.chrome.com/extensi
         else if (request.greeting === "updateCourses") {	// inject.js has an updated version of the courses object
 			courses = request.information;
             // update in storage.sync
-            chrome.storage.local.set({courses}, function(callback) {
+            chrome.storage.sync.set({courses}, function(callback) {
                 // check that the message was successfully received
                 var lastError = chrome.runtime.lastError;
                 if (lastError) {
@@ -192,7 +193,7 @@ chrome.runtime.onMessage.addListener(				// https://developer.chrome.com/extensi
         else if (request.greeting === "updatePreferences") {	// options.js can have updated versions of the preferences object
 			preferences = request.information;
             // update in storage.sync
-            chrome.storage.local.set({preferences}, function() {
+            chrome.storage.sync.set({preferences}, function() {
                 var lastError = chrome.runtime.lastError;
                 if (lastError) {
                     console.log(lastError.message);

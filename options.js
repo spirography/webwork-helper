@@ -1,7 +1,7 @@
 var preferences, courses;
 
 /*
- * Saves options to chrome.storage.local.
+ * Saves options to chrome.storage.sync.
  */
 function save_options() {
 
@@ -94,7 +94,7 @@ function restore_options() {
         }
 
         // print out total sync storage space used by extension
-        chrome.storage.local.getBytesInUse(null, function(bytesInUse) {
+        chrome.storage.sync.getBytesInUse(null, function(bytesInUse) {
             document.getElementById("total-memory-used").innerText = "Total memory used: " + bytesInUse + " bytes";
         });
     });
