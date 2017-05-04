@@ -18,9 +18,7 @@ chrome.runtime.onInstalled.addListener(function(details){
      * if # is positive, version1 is greater
      */
     function versionComp(version1, version2) {
-        // parse each one
-        console.log(version1.split("."));
-
+        // parse each part
         versionToArray = function(version) {
             return version.split(".").map(function(n) {
                 return parseInt(n, 10);
@@ -54,7 +52,8 @@ chrome.runtime.onInstalled.addListener(function(details){
         	coloring: true, // for color stuff on class and assignment pages (not used)
             //autocompleteBrackets: true, // for autocompleting brackets on problems (not used)
             highlighting: 2, // for highlighting brackets and parentheses
-            notes: false
+            notes: false, // for scribing notes on individual problems for later use
+            currentCourses: [] // for listing the user's current classes in the upper corner
         };
         console.log(preferences);
         chrome.storage.sync.set({preferences}, function() {
@@ -70,7 +69,6 @@ chrome.runtime.onInstalled.addListener(function(details){
         console.log("Successfully updated from " + details.previousVersion + " to " + chrome.runtime.getManifest().version);
 
         // update courses to new notation
-        console.log("type:", typeof details.previousVersion);
         if (versionComp(details.previousVersion, "1.5") < 0) {
             chrome.storage.sync.get(["courses", "preferences"], function(items) {
                 courses = items.courses;
