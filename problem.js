@@ -91,20 +91,17 @@
               if (previewDiv.text().length == 0 && e.originalEvent !== undefined) {
                   previewDiv.show().animate({opacity: 1}, 200);
               }
-              var foo = Math.random();
               // use an element separate from the DOM to prevent jerkiness in preview element (only update it once temp creates the HTML)
-              var temp = document.createElement('div');
+            //   var temp = document.createElement('div');
               // add on the slashes and brackets to the sides and append to the DOM if it is long enough
-              temp.innerText = '\\[ ' + value + ' \\]';
+            //   temp.innerText = '\\[ ' + value + ' \\]';
             //   console.log(temp.innerHTML);
-            //   previewDiv.text('\\[ ' + value + ' \\]');
+              previewDiv.text('\\[ ' + value + ' \\]');
               // format the corresponding preview div (and ONLY that div)
-              console.log(foo);
-              MathJax.Hub.Queue(["Typeset", MathJax.Hub, /*previewDiv[0]*/temp], function() { // TODO: put callback script in function and execute on window resizes?
+              
+              MathJax.Hub.Queue(["Typeset", MathJax.Hub, previewDiv[0]/*temp*/], function() { // TODO: put callback script in function and execute on window resizes?
                   // on the callback, check the element's width (if it is large enough, change the class)
-                //   console.log(temp.innerHTML);
-                  console.log(foo);
-                  previewDiv.html(temp);
+                //   previewDiv.html(temp);
 
                   var width = previewDiv.width();
                   // get the width between the element and the window edge
