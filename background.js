@@ -65,6 +65,18 @@ chrome.runtime.onInstalled.addListener(function(details){
         	console.log("user preferences successfully initialized", preferences);
         });
 
+        // initialize the courses
+        courses = {};
+        chrome.storage.sync.set({courses}, function() {
+            var lastError = chrome.runtime.lastError;
+            if (lastError) {
+                console.log(lastError.message);
+                return;
+            }
+        	console.log("courses initialized to an empty object");
+        });
+
+
     }else if(details.reason == "update"){
         console.log("Successfully updated from " + details.previousVersion + " to " + chrome.runtime.getManifest().version);
 
