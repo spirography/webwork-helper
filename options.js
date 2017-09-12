@@ -103,3 +103,8 @@ function restore_options() {
 document.addEventListener("DOMContentLoaded", restore_options);
 // when clicked, saves the user's preferences
 document.getElementById("save").addEventListener("click", save_options);
+
+// chrome 60 has a bug where if an extension has a file with a size that is a multiple of 4096, the extension crashes
+// this should be fixed in chrome 61
+// once it is fixed, these comments and anything below them should be removed
+console.log('delete this line once chrome fixes the bug with file sizes that are a multiple of 4096');
