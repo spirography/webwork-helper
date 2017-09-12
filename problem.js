@@ -75,7 +75,7 @@
           // cache value of the preview div
           var previewDiv = $('#' + id + 'preview');
 
-          if (value.length < 3) {
+          if (!isEligibleForAnswerPreview(id)) {
               // empty the preview div to prevent ugly markup rendering
               previewDiv.empty();
 
@@ -91,13 +91,21 @@
               if (previewDiv.text().length == 0 && e.originalEvent !== undefined) {
                   previewDiv.show().animate({opacity: 1}, 200);
               }
-
+              var foo = Math.random();
+              // use an element separate from the DOM to prevent jerkiness in preview element (only update it once temp creates the HTML)
+              var temp = document.createElement('div');
               // add on the slashes and brackets to the sides and append to the DOM if it is long enough
-              previewDiv.text("\\[ " + value + " \\]");
-
+              temp.innerText = '\\[ ' + value + ' \\]';
+            //   console.log(temp.innerHTML);
+            //   previewDiv.text('\\[ ' + value + ' \\]');
               // format the corresponding preview div (and ONLY that div)
-              MathJax.Hub.Queue(["Typeset", MathJax.Hub, id+"preview"], function() { // TODO: put callback script in function and execute on window resizes?
+              console.log(foo);
+              MathJax.Hub.Queue(["Typeset", MathJax.Hub, /*previewDiv[0]*/temp], function() { // TODO: put callback script in function and execute on window resizes?
                   // on the callback, check the element's width (if it is large enough, change the class)
+                //   console.log(temp.innerHTML);
+                  console.log(foo);
+                  previewDiv.html(temp);
+
                   var width = previewDiv.width();
                   // get the width between the element and the window edge
                   var offset = $(e.target).offset().left;
@@ -131,13 +139,36 @@
 
       });
 
+      // returns true/false if the element meets requirements for having a preview shown of it
+      function isEligibleForAnswerPreview(elementID) {
+          var value = $('#' + elementID).val();
 
-
+          var numOperators = 0, numParen = 0;
+          var reqOperators = 3, reqParen = 4;
+          var previewEligible = false;
+          for (var i = 0; i < value.length; i++) {
+              switch(value.charAt(i)) {
+                  case '(':
+                  case ')':
+                  case '[':
+                  case ']':
+                    numParen++; break;
+                  case '+':
+                  case '-':
+                  case '*':
+                  case '^':
+                    numOperators++; break;
+                  case '/': numOperators = reqOperators; break;
+              }
+              if (numOperators >= reqOperators || numParen >= reqParen) {
+                  return true;
+              }
+          }
+          return false;
+      }
 
       function showAnswerPreviewDiv(elementID) {
-          var value = $('#' + elementID).val();
-          // only show if there is some text in the input field
-          if (value.length >= 3) {   // slightly differnet from the similar code above
+          if (isEligibleForAnswerPreview(elementID)) {   // slightly differnet from the similar code above
               $('#' + elementID + 'preview').show().animate({opacity: 1}, 200);
           }
       }
