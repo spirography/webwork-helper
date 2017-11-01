@@ -155,12 +155,39 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
         highlight.style.minWidth = getComputedStyle(inputs[i])["width"];
         // append highlight div to container
         container.appendChild(highlight);
+
+
+        // create replace div
+        var replace = document.createElement("div");
+        replace.setAttribute("class", "replace");
+        replace.setAttribute("id", id+"replace");
+
+        var replaceButton = document.createElement("input");
+        replaceButton.setAttribute("class", "btn replace_btn")
+        var replaceVariable = document.createElement("input");
+        replaceVariable.setAttribute("class", "replace_field replace variable hidden");
+        replaceVariable.placeholder = "Variable"
+        var replaceValue = document.createElement("input");
+        replaceValue.setAttribute("class", "replace_field replace_value hidden");
+        replaceValue.placeholder = "Value";
+        replace.appendChild(replaceButton);
+        replace.appendChild(replaceVariable);
+        replace.appendChild(replaceValue);
+
+        // append error div to container
+        container.appendChild(replace);
+
+
+
         // create errors div
         var errors = document.createElement("div")
         errors.setAttribute("class", "errors")
         errors.setAttribute("id", id+"errors");
         // append error div to container
         container.appendChild(errors);
+
+
+
 
         // add note container div information (ONLY IF NOTES ARE ENABLED)
         if (preferences.notes) {

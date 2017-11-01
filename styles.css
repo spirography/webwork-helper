@@ -399,3 +399,13 @@ input.codeshard {
 .math span:last-child {
 	border: none !important;
 }
+
+.replace {
+	float: right;
+}
+.replace_field {
+
+}
+.hidden {
+	visibility: hidden;
+}

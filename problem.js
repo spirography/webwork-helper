@@ -46,6 +46,30 @@
           $(summary).children().html("I estimate that you answered <b>" + (problemsWrong == 0 ? "zero" : problemsWrong) + "</b> question" + (problemsWrong == 1 ? "" : "s") + " incorrectly.<br>" + $(summary).children().html());
       }
 
+      $('input.replace_btn').on('click', function(e) {
+        if ($(this).hasClass("replace_ready")) {
+            let original = $(this);
+            let variable = original.next().val();
+            let value = original.next().next().val();
+            if (variable) {
+              let inputBox = original.parent().parent().find("input.codeshard");
+              let initialInput = inputBox.val();
+              let newInput = initialInput.replace(new RegExp(variable, 'gi'), ("(" + value + ")"));
+
+              inputBox.val(newInput);
+
+              $(this).next().removeClass("hidden");
+              $(this).next().next().removeClass("hidden");
+            }
+
+        } else {
+            $(this).next().removeClass("hidden");
+            $(this).next().next().removeClass("hidden");
+            $(this).addClass("replace_ready");
+        }
+
+
+      })
 
       /*
        * When the value inside an answer box changes, calculate the length
@@ -98,7 +122,7 @@
             //   console.log(temp.innerHTML);
               previewDiv.text('\\[ ' + value + ' \\]');
               // format the corresponding preview div (and ONLY that div)
-              
+
               MathJax.Hub.Queue(["Typeset", MathJax.Hub, previewDiv[0]/*temp*/], function() { // TODO: put callback script in function and execute on window resizes?
                   // on the callback, check the element's width (if it is large enough, change the class)
                 //   previewDiv.html(temp);
