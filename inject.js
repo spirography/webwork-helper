@@ -162,10 +162,11 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
         replace.setAttribute("class", "replace");
         replace.setAttribute("id", id+"replace");
 
-        var replaceButton = document.createElement("input");
-        replaceButton.setAttribute("class", "btn replace_btn")
+        var replaceButton = document.createElement("button");
+        replaceButton.setAttribute("class", "btn replace_btn");
+        replaceButton.innerHTML = "Open Replace";
         var replaceVariable = document.createElement("input");
-        replaceVariable.setAttribute("class", "replace_field replace variable hidden");
+        replaceVariable.setAttribute("class", "replace_field replace_variable hidden");
         replaceVariable.placeholder = "Variable"
         var replaceValue = document.createElement("input");
         replaceValue.setAttribute("class", "replace_field replace_value hidden");

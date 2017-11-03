@@ -46,7 +46,8 @@
           $(summary).children().html("I estimate that you answered <b>" + (problemsWrong == 0 ? "zero" : problemsWrong) + "</b> question" + (problemsWrong == 1 ? "" : "s") + " incorrectly.<br>" + $(summary).children().html());
       }
 
-      $('input.replace_btn').on('click', function(e) {
+      $('button.replace_btn').on('click', function(e) {
+        e.preventDefault();
         if ($(this).hasClass("replace_ready")) {
             let original = $(this);
             let variable = original.next().val();
@@ -54,6 +55,7 @@
             if (variable) {
               let inputBox = original.parent().parent().find("input.codeshard");
               let initialInput = inputBox.val();
+              console.log(initialInput);
               let newInput = initialInput.replace(new RegExp(variable, 'gi'), ("(" + value + ")"));
 
               inputBox.val(newInput);
@@ -63,9 +65,10 @@
             }
 
         } else {
-            $(this).next().removeClass("hidden");
+            $(this).next().removeClass("hidden").focus();
             $(this).next().next().removeClass("hidden");
             $(this).addClass("replace_ready");
+            $(this).text("Replace");
         }
 
 

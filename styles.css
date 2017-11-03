@@ -404,7 +404,10 @@ input.codeshard {
 	float: right;
 }
 .replace_field {
-
+ float: left;
+}
+.replace_btn {
+ float: left;
 }
 .hidden {
 	visibility: hidden;
