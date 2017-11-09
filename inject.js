@@ -165,15 +165,8 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
         var replaceButton = document.createElement("button");
         replaceButton.setAttribute("class", "btn replace_btn");
         replaceButton.innerHTML = "Open Replace";
-        var replaceVariable = document.createElement("input");
-        replaceVariable.setAttribute("class", "replace_field replace_variable hidden");
-        replaceVariable.placeholder = "Variable"
-        var replaceValue = document.createElement("input");
-        replaceValue.setAttribute("class", "replace_field replace_value hidden");
-        replaceValue.placeholder = "Value";
         replace.appendChild(replaceButton);
-        replace.appendChild(replaceVariable);
-        replace.appendChild(replaceValue);
+
 
         // append error div to container
         container.appendChild(replace);

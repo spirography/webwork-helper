@@ -47,7 +47,8 @@
       }
 
       $('button.replace_btn').on('click', function(e) {
-        e.preventDefault();
+        console.log("hi");
+        e.stopImmediatePropagation();
         if ($(this).hasClass("replace_ready")) {
             let original = $(this);
             let variable = original.next().val();
@@ -63,15 +64,18 @@
               $(this).next().removeClass("hidden");
               $(this).next().next().removeClass("hidden");
             }
-
         } else {
-            $(this).next().removeClass("hidden").focus();
-            $(this).next().next().removeClass("hidden");
+            var replaceVariable = document.createElement("input");
+            replaceVariable.setAttribute("class", "replace_field replace_variable");
+            replaceVariable.placeholder = "Variable"
+            var replaceValue = document.createElement("input");
+            replaceValue.setAttribute("class", "replace_field replace_value");
+            replaceValue.placeholder = "Value";
+            $(this).parent().append(replaceVariable).focus();
+            $(this).parent().append(replaceValue);
             $(this).addClass("replace_ready");
             $(this).text("Replace");
         }
-
-
       })
 
       /*
