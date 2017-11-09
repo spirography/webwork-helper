@@ -156,7 +156,7 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
         // append highlight div to container
         container.appendChild(highlight);
 
-
+        if (preferences.replace) {
         // create replace div
         var replace = document.createElement("div");
         replace.setAttribute("class", "replace");
@@ -170,6 +170,7 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
 
         // append error div to container
         container.appendChild(replace);
+      }
 
 
 

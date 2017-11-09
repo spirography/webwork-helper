@@ -19,6 +19,7 @@ function save_options() {
     preferences.highlighting = highlight_value;
     preferences.coloring = document.getElementById("coloring").checked;
     preferences.notes = document.getElementById("notes").checked;
+    preferences.replace = document.getElementById("replace").checked;
 
 
     // display "Options saved" message (can't go into the sendMessage block for some reason, probably because background.js doesn't send a response)
@@ -72,7 +73,7 @@ function restore_options() {
         document.getElementById("highlighting" + preferences.highlighting).checked = true; // highlight specific radio button
         document.getElementById("coloring").checked = preferences.coloring;
         document.getElementById("notes").checked = preferences.notes;
-
+        document.getElementById("replace").checked = preferences.replace;
         // course list
         var courseInfo = document.getElementById("courses");
         for (var key in courses) {
