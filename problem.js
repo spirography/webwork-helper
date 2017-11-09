@@ -48,7 +48,7 @@
 
       $('button.replace_btn').on('click', function(e) {
         console.log("hi");
-        e.stopImmediatePropagation();
+        e.preventDefault();
         if ($(this).hasClass("replace_ready")) {
             let original = $(this);
             let variable = original.next().val();
