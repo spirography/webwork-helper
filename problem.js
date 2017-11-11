@@ -75,8 +75,31 @@
             $(this).parent().append(replaceValue);
             $(this).addClass("replace_ready");
             $(this).text("Replace");
+            var valueOriginalLength = 200;
+            var variableOriginalLength = 200;
+
+            $('input.replace_value').on('input', function(e) {
+              var value = $(this).val();
+              console.log(valueOriginalLength)
+              var length = Math.floor(value.length*10.8); // width of one character in 18px Courier
+              if (length >= valueOriginalLength) {
+                $(this).css('width', length*1.05+'px');
+              }
+            })
+
+            $('input.replace_variable').on('input', function(e) {
+              var value = $(this).val();
+              var length = Math.floor(value.length*10.8); // width of one character in 18px Courier
+              if (length >= variableOriginalLength) {
+                $(this).css('width', length*1.05+'px');
+              }
+            })
         }
       })
+
+
+
+        $('input.replace_field').trigger("input");
 
       /*
        * When the value inside an answer box changes, calculate the length
