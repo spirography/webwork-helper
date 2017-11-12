@@ -67,16 +67,18 @@
         } else {
             var replaceVariable = document.createElement("input");
             replaceVariable.setAttribute("class", "replace_field replace_variable");
-            replaceVariable.placeholder = "Variable"
+            replaceVariable.placeholder = "Variable";
+            replaceVariable.style.width = 86.4+'px';
             var replaceValue = document.createElement("input");
             replaceValue.setAttribute("class", "replace_field replace_value");
             replaceValue.placeholder = "Value";
+            replaceValue.style.width = 64.8+'px';
             $(this).parent().append(replaceVariable).focus();
             $(this).parent().append(replaceValue);
             $(this).addClass("replace_ready");
             $(this).text("Replace");
-            var valueOriginalLength = 200;
-            var variableOriginalLength = 200;
+            var valueOriginalLength = 6*10.8;
+            var variableOriginalLength = 8*10.8;
 
             $('input.replace_value').on('input', function(e) {
               var value = $(this).val();
