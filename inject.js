@@ -158,13 +158,14 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
 
         if (preferences.replace) {
         // create replace div
-        var replace = document.createElement("div");
+        let replace = document.createElement("div");
         replace.setAttribute("class", "replace");
         replace.setAttribute("id", id+"replace");
 
-        var replaceButton = document.createElement("button");
+        let replaceButton = document.createElement("button");
         replaceButton.setAttribute("class", "btn replace_btn");
         replaceButton.innerHTML = "Open Replace";
+        replaceButton.setAttribute("id", id+"replace_btn");
         replace.appendChild(replaceButton);
 
 
