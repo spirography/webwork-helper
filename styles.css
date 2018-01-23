@@ -254,7 +254,7 @@ tr:hover .timer-hidden {
  * highlighting overlays on inputs
  */
 
-.highlight, .errors, .codeshard {
+.highlight, .errors, .codeshard, .replace_field{
 	font-family: Courier;
 	font-size: 18px !important;
 	padding: 4px 2px !important;
@@ -398,4 +398,17 @@ input.codeshard {
 /* get rid of stupid MathJax border on right side of all equations) */
 .math span:last-child {
 	border: none !important;
+}
+
+.replace {
+	float: right;
+}
+.replace_field {
+ float: left;
+}
+.replace_btn {
+ float: left;
+}
+.hidden {
+	visibility: hidden;
 }

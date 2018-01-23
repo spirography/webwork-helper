@@ -32,6 +32,8 @@ $(document).ready(function() {
 
             if (remainingTime > 0) {
                 // only apply the below if the assignment is open
+
+
                 if (text.substr(0,4).toLowerCase() === "open") {
 
                     // add a timer <span>, which has the duedate countdown saved to it (measured in seconds)
@@ -54,7 +56,14 @@ $(document).ready(function() {
                         }
                     }
                 } else {
+                    if (text.substr(0,12).toLowerCase() === "will open on") {
+
+                         $("<span/>", {"class": "timer-hidden"}).data("seconds", remainingTime).data("duedate", Math.floor(duedate/1000)).appendTo($(this));
+
+                        $(this).parent().addClass("WWnormal");
+                    } else {
                     $(this).parent().addClass("disabled");
+                }
                 }
 
                 incrementTimer(this);

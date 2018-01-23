@@ -155,12 +155,35 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
         highlight.style.minWidth = getComputedStyle(inputs[i])["width"];
         // append highlight div to container
         container.appendChild(highlight);
+
+        if (preferences.replace) {
+        // create replace div
+        let replace = document.createElement("div");
+        replace.setAttribute("class", "replace");
+        replace.setAttribute("id", id+"replace");
+
+        let replaceButton = document.createElement("button");
+        replaceButton.setAttribute("class", "btn replace_btn");
+        replaceButton.innerHTML = "Open Replace";
+        replaceButton.setAttribute("id", id+"replace_btn");
+        replace.appendChild(replaceButton);
+
+
+        // append error div to container
+        container.appendChild(replace);
+      }
+
+
+
         // create errors div
         var errors = document.createElement("div")
         errors.setAttribute("class", "errors")
         errors.setAttribute("id", id+"errors");
         // append error div to container
         container.appendChild(errors);
+
+
+
 
         // add note container div information (ONLY IF NOTES ARE ENABLED)
         if (preferences.notes) {

@@ -46,6 +46,58 @@
           $(summary).children().html("I estimate that you answered <b>" + (problemsWrong == 0 ? "zero" : problemsWrong) + "</b> question" + (problemsWrong == 1 ? "" : "s") + " incorrectly.<br>" + $(summary).children().html());
       }
 
+      $('button.replace_btn').on('click', function(e) {
+        e.preventDefault();
+        if ($(this).hasClass("replace_ready")) {
+            let original = $(this);
+            let variable = original.next().val();
+            let value = original.next().next().val();
+            if (variable) {
+              let inputBox = original.parent().parent().find("input.codeshard");
+              let initialInput = inputBox.val();
+              let newInput = initialInput.replace(new RegExp(variable, 'gi'), ("(" + value + ")"));
+
+              inputBox.val(newInput);
+
+              $(this).next().removeClass("hidden");
+              $(this).next().next().removeClass("hidden");
+            }
+        } else {
+            let replaceVariable = document.createElement("input");
+            replaceVariable.setAttribute("class", "replace_field replace_variable");
+            replaceVariable.placeholder = "Variable";
+            replaceVariable.style.width = 86.4+'px';
+            let replaceValue = document.createElement("input");
+            replaceValue.setAttribute("class", "replace_field replace_value");
+            replaceValue.placeholder = "Value";
+            replaceValue.style.width = 64.8+'px';
+            $(this).parent().append(replaceVariable).focus();
+            $(this).parent().append(replaceValue);
+            $(this).addClass("replace_ready");
+            $(this).text("Replace");
+            const valueOriginalLength = 6*10.8;
+            const variableOriginalLength = 8*10.8;
+
+            $('input.replace_value').on('input', function(e) {
+              let value = $(this).val();
+              let length = Math.floor(value.length*10.8); // width of one character in 18px Courier
+              if (length >= valueOriginalLength) {
+                $(this).css('width', length*1.05+'px');
+              }
+            });
+
+            $('input.replace_variable').on('input', function(e) {
+              let value = $(this).val();
+              let length = Math.floor(value.length*10.8); // width of one character in 18px Courier
+              if (length >= variableOriginalLength) {
+                $(this).css('width', length*1.05+'px');
+              }
+            });
+        }
+      });
+
+
+
 
       /*
        * When the value inside an answer box changes, calculate the length
@@ -98,7 +150,7 @@
             //   console.log(temp.innerHTML);
               previewDiv.text('\\[ ' + value + ' \\]');
               // format the corresponding preview div (and ONLY that div)
-              
+
               MathJax.Hub.Queue(["Typeset", MathJax.Hub, previewDiv[0]/*temp*/], function() { // TODO: put callback script in function and execute on window resizes?
                   // on the callback, check the element's width (if it is large enough, change the class)
                 //   previewDiv.html(temp);
