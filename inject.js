@@ -156,7 +156,11 @@ if (ASSIGNMENT !== "hardcopy" && ASSIGNMENT !== "options") {
         // append highlight div to container
         container.appendChild(highlight);
 
-        if (preferences.replace) {
+        // create the replace buttons, if enabled
+        // don't want to add to matrix cell inputs and other input fields with small width
+        // so only add them to input boxes that are wide enough to probably belong to a problem that requires replace
+        console.log(inputs[i].size);
+        if (preferences.replace && (inputs[i].size == null || inputs[i].size > 4)) {
         // create replace div
         let replace = document.createElement("div");
         replace.setAttribute("class", "replace");
